@@ -1,0 +1,35 @@
+@view-transition {
+  navigation: auto;
+}
+
+/* The color field grows into the header. The title and count move independently. */
+.is-opening .w-face,
+.influence-header {
+  view-transition-name: topic-card;
+}
+
+.is-opening.is-front .topic-count-title,
+.is-opening:not(.is-front) .w-label,
+.influence-header .topic-count-title {
+  view-transition-name: topic-name;
+}
+
+.is-opening.is-front .count,
+.influence-header .count {
+  view-transition-name: topic-votes;
+}
+
+::view-transition-group(*) {
+  animation-duration: 240ms;
+  animation-timing-function: cubic-bezier(.2, .7, .25, 1);
+}
+
+::view-transition-group(topic-card) { z-index: 1; }
+::view-transition-group(topic-name),
+::view-transition-group(topic-votes) { z-index: 2; }
+
+::view-transition-old(topic-card),
+::view-transition-new(topic-card) {
+  height: 100%;
+  object-fit: fill;
+}

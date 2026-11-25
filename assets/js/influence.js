@@ -1,3 +1,8 @@
+const header = document.querySelector('.influence-header');
+const topicIndex = TOPICS.findIndex(({ slug }) => slug === header.dataset.topic);
+header.style.setProperty('--topic-accent', TOPICS[topicIndex].c);
+header.querySelector('.topic-count-row').insertAdjacentHTML('beforeend', countHTML(topicIndex, 'xl'));
+
 const rows = [...document.querySelectorAll('.bars .bar')];
 const n = rows.length;
 const equal = () => rows.map(() => 100 / n);

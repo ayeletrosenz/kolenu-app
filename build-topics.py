@@ -92,16 +92,6 @@ TOPICS = [
     ]),
 ]
 
-STATUS = """      <div class="status-bar" aria-hidden="true">
-        <span class="status-time">10:24</span>
-        <span class="status-icons">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21 0 8.5C3.3 5.4 7.5 3.5 12 3.5s8.7 1.9 12 5L12 21Z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2 22h20V2L2 22Z"/></svg>
-          <svg width="10" height="16" viewBox="0 0 10 18" fill="none"><rect x="3.5" y="0" width="3" height="2" fill="currentColor"/><rect x="0.75" y="1.75" width="8.5" height="15.5" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="2.5" y="6" width="5" height="9.5" fill="currentColor"/></svg>
-        </span>
-      </div>"""
-
-
 def page(slug, name, subs):
     items = "\n".join(
         f"""          <li style="--color: var(--{color})">
@@ -117,12 +107,10 @@ def page(slug, name, subs):
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="device" aria-label="Pixel 11 Pro">
+  <div class="device">
     <span class="btn btn-power" aria-hidden="true"></span>
     <span class="btn btn-volume" aria-hidden="true"></span>
-    <div class="device-bezel" style="--status-bg: var(--sky)">
-      <div class="punch-hole" aria-hidden="true"></div>
-{STATUS}
+    <div class="device-bezel" style="--screen-edge: var(--sky)">
       <main class="screen">
         <section class="hero hero--topic" style="--hero: var(--sky)">
           <div class="top-row">
@@ -172,21 +160,25 @@ def edit_page(slug, name, subs):
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{name} · חלוקת השפעה · קולנו</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/topic-transition.css" media="(prefers-reduced-motion: no-preference)">
 </head>
 <body>
-  <div class="device" aria-label="Pixel 11 Pro">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="ballot" viewBox="0 0 24 24"><path fill="currentColor" d="M11 0H24V24H0V11H11Z M9 0V9H0Z"/></symbol>
+  </svg>
+  <div class="device">
     <span class="btn btn-power" aria-hidden="true"></span>
     <span class="btn btn-volume" aria-hidden="true"></span>
-    <div class="device-bezel">
-      <div class="punch-hole" aria-hidden="true"></div>
-{STATUS}
+    <div class="device-bezel device-bezel--influence">
       <main class="screen">
-        <header class="top">
-          <a class="back" href="drafts/index.html" {back}>
+        <header class="top influence-header" data-topic="{slug}">
+          <a class="back" href="drafts/4-wheel.html" {back}>
             <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true"><path d="M2 1.5L8.5 8L2 14.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/></svg>
             <span>חזרה להצבעה</span>
           </a>
-          <h1 class="topic-title">{name}</h1>
+          <div class="topic-count-row">
+            <h1 class="topic-count-title">{name}</h1>
+          </div>
         </header>
 
         <section class="intro">
@@ -204,7 +196,7 @@ def edit_page(slug, name, subs):
         </ul>
 
         <footer class="footer">
-          <a class="primary" href="drafts/index.html" {back}>סיימתי</a>
+          <a class="primary" href="drafts/4-wheel.html" {back}>סיימתי</a>
         </footer>
       </main>
       <div class="sheet-scrim" hidden>
@@ -220,6 +212,7 @@ def edit_page(slug, name, subs):
       <div class="home-indicator" aria-hidden="true"></div>
     </div>
   </div>
+  <script src="drafts/ballot.js"></script>
   <script src="assets/js/influence.js"></script>
 </body>
 </html>

@@ -1,0 +1,24 @@
+{
+  "id": "./landing.html",
+  "name": "קולנו",
+  "short_name": "קולנו",
+  "lang": "he",
+  "dir": "rtl",
+  "start_url": "./landing.html",
+  "scope": "./",
+  "display": "fullscreen",
+  "background_color": "#FDFCFA",
+  "theme_color": "#6BCDF2",
+  "icons": [
+    {
+      "src": "assets/illustrations/app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/illustrations/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

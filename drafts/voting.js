@@ -2,12 +2,10 @@
 const nextPrice = (i) => 2 * votes[i] + 1;
 const canAdd = (i) => nextPrice(i) <= left();
 
-const topicStyle = (i) => `--c:${TOPICS[i].c};--on:${TOPICS[i].on}`;
+const topicStyle = (i) => `--c:${TOPICS[i].c}`;
+const appRoot = new URL('../', document.currentScript.src);
 
 /* ---------- shared pieces ---------- */
-const countHTML = (i, size = 'm') =>
-  `<span class="count count--${size}">${icon('ballot', { xl: 36, l: 26, o: 22 }[size] || 18)}<b>${votes[i]}</b></span>`;
-
 const priceHTML = (i, withIcon = true) =>
   canAdd(i)
     ? `<span class="price">הקול הבא: ${nextPrice(i)} ${tokensWord(nextPrice(i))}${withIcon ? ` ${icon('token', 14)}` : ''}</span>`
@@ -21,12 +19,15 @@ const stepperHTML = (i, size = 'm') =>
   `<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10H17"/></svg></button></span>`;
 
 /* Always the influence split; without votes it opens locked at 0%. */
+const topicHref = (i) =>
+  new URL(`topic-${TOPICS[i].slug}-edit.html${votes[i] > 0 ? '' : '?novotes'}`, appRoot).href;
+
 const subHTML = (i) =>
-  `<a class="sub" href="../topic-${TOPICS[i].slug}-edit.html${votes[i] > 0 ? '' : '?novotes'}">תתי־נושאים</a>`;
+  `<a class="sub" href="${topicHref(i)}">תתי־נושאים</a>`;
 
 /* Topic name with its subtopics link right under it */
-const headHTML = (i, big = false) =>
-  `<div class="t-head"><span class="t-name${big ? ' t-name--big' : ''}">${TOPICS[i].name}</span>${subHTML(i)}</div>`;
+const headHTML = (i) =>
+  `<div class="t-head"><span class="t-name">${TOPICS[i].name}</span>${subHTML(i)}</div>`;
 
 /* ---------- wallet: 13 / 12 / 13 / 12 ---------- */
 const screen = document.querySelector('.v');
@@ -51,6 +52,7 @@ let previewFor = null;
 function renderWallet() {
   const l = left();
   const p = previewFor !== null && canAdd(previewFor) ? nextPrice(previewFor) : 0;
+  if (p) walletGrid.style.setProperty('--next-token', TOPICS[previewFor].c);
   tokenEls.forEach((t, k) => {
     t.className = k >= l ? 'spent' : k >= l - p ? 'next' : '';
   });
@@ -157,7 +159,7 @@ const cardsLayout = () => {
 
 /* Front-card content shared by the wheel and the overview spotlight */
 const focusCardHTML = (i, size = 'l') =>
-  `<div class="f-top"><span class="t-name t-name--big">${TOPICS[i].name}</span>${countHTML(i, 'xl')}</div>` +
+  `<div class="topic-count-row"><span class="topic-count-title">${TOPICS[i].name}</span>${countHTML(i, 'xl')}</div>` +
   `<div class="f-foot">${stepperHTML(i, size)}<div class="f-meta">${priceHTML(i)}${subHTML(i)}</div></div>`;
 
 /* ---------- 4. wheel: the side of an endless drum of cards ---------- */
@@ -201,6 +203,7 @@ const wheelLayout = () => {
       faces[i].style.transformOrigin = d > 0 ? '50% 0' : '50% 100%';
       faces[i].style.transform = `rotate(${SKEW[i] * Math.min(a, 1)}deg)`;
     });
+    if (indexAt(pos) !== previewFor) activate();
   }
 
   function settle() {
@@ -223,9 +226,24 @@ const wheelLayout = () => {
   }
 
   const goTo = (t) => { target = t; settle(); };
-  const goToTopic = (i) => goTo(Math.round(pos) + Math.round(around(i - Math.round(pos))));
+  function openTopic(card) {
+    if (stage.querySelector('.is-opening')) return;
+    cancelAnimationFrame(raf);
+    card.classList.add('is-opening');
+    location.href = topicHref(Number(card.dataset.i));
+  }
 
-  let startY = null;
+  addEventListener('pageshow', () => {
+    const opened = stage.querySelector('.is-opening');
+    if (!opened) return;
+    opened.classList.remove('is-opening');
+    goTo(Math.round(pos));
+  });
+
+  let startX = 0;
+  let startY = 0;
+  let pointerId = null;
+  let pressedCard = null;
   let startPos = 0;
   let lastY = 0;
   let lastT = 0;
@@ -233,8 +251,11 @@ const wheelLayout = () => {
   let moved = false;
 
   stage.addEventListener('pointerdown', (e) => {
-    if (e.target.closest('button, a')) return;
+    if (!e.isPrimary || e.button !== 0 || e.target.closest('button, a')) return;
     cancelAnimationFrame(raf);
+    pointerId = e.pointerId;
+    pressedCard = e.target.closest('.w-card');
+    startX = e.clientX;
     startY = lastY = e.clientY;
     lastT = performance.now();
     startPos = pos;
@@ -244,9 +265,10 @@ const wheelLayout = () => {
   });
 
   stage.addEventListener('pointermove', (e) => {
-    if (startY === null) return;
+    if (e.pointerId !== pointerId) return;
     const dy = e.clientY - startY;
-    if (Math.abs(dy) > 4) moved = true;
+    if (!moved && Math.abs(dy) <= 4) return;
+    moved = true;
     pos = startPos - dy / STRIP;
     const now = performance.now();
     vel = (e.clientY - lastY) / Math.max(1, now - lastT);
@@ -256,16 +278,26 @@ const wheelLayout = () => {
   });
 
   const release = (e) => {
-    if (startY === null) return;
-    startY = null;
-    if (!moved) {
-      const card = document.elementsFromPoint(e.clientX, e.clientY).find((el) => el.classList?.contains('w-card'));
-      if (card) return goToTopic(+card.dataset.i);
+    if (e.pointerId !== pointerId) return;
+    pointerId = null;
+    const card = pressedCard;
+    pressedCard = null;
+    if (e.type === 'pointercancel') return goTo(Math.round(pos));
+    const hit = document.elementFromPoint(e.clientX, e.clientY);
+    if (!moved && Math.abs(e.clientX - startX) <= 4 && card && card.contains(hit)) {
+      return openTopic(card);
     }
     goTo(Math.round(pos - (vel * 220) / STRIP));
   };
   stage.addEventListener('pointerup', release);
   stage.addEventListener('pointercancel', release);
+
+  stage.addEventListener('click', (e) => {
+    const link = e.target.closest('.sub');
+    if (!link || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    openTopic(link.closest('.w-card'));
+  });
 
   stage.addEventListener('wheel', (e) => {
     e.preventDefault();
@@ -273,8 +305,13 @@ const wheelLayout = () => {
   }, { passive: false });
 
   stage.addEventListener('keydown', (e) => {
+    if (e.target !== stage) return;
     if (e.key === 'ArrowDown') { e.preventDefault(); goTo(Math.round(target) + 1); }
     if (e.key === 'ArrowUp') { e.preventDefault(); goTo(Math.round(target) - 1); }
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openTopic(cards[indexAt(pos)]);
+    }
   });
 
   const api = {

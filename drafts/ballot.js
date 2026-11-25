@@ -1,21 +1,21 @@
 /* The ballot shared by the voting drafts and the summary. Votes cost n² tokens; nothing is sent. */
 const BUDGET = 50;
 
-/* Draft colour per topic (each accent once). `on` is the readable ink for that fill.
+/* Each topic uses one accent from styles.css.
    `slug` matches topic-<slug>.html (reading) and topic-<slug>-edit.html (influence). */
 const TOPICS = [
-  { slug: 'defense', name: 'ביטחון', c: '#2E9E5B', on: 'var(--paper)' },
-  { slug: 'homeland', name: 'ביטחון פנים וחירום', c: '#E5383B', on: 'var(--ink)' },
-  { slug: 'health', name: 'בריאות', c: '#5BC8F0', on: 'var(--ink)' },
-  { slug: 'housing', name: 'דיור ופיתוח יישובים', c: '#FF3DAE', on: 'var(--ink)' },
-  { slug: 'religion', name: 'דת ומוסדות תורניים', c: '#8E5CD9', on: 'var(--paper)' },
-  { slug: 'education', name: 'חינוך והשכלה גבוהה', c: '#FFC72C', on: 'var(--ink)' },
-  { slug: 'economy', name: 'כלכלה ותעסוקה', c: '#FF7A1A', on: 'var(--ink)' },
-  { slug: 'culture', name: 'מדע, תרבות וספורט', c: '#B03A9E', on: 'var(--paper)' },
-  { slug: 'government', name: 'ממשל ושירותים ציבוריים', c: '#2F54C9', on: 'var(--paper)' },
-  { slug: 'environment', name: 'סביבה, אנרגיה ומים', c: '#A3CF3F', on: 'var(--ink)' },
-  { slug: 'welfare', name: 'רווחה וביטחון חברתי', c: '#14A89A', on: 'var(--ink)' },
-  { slug: 'transport', name: 'תחבורה', c: '#8B5A3C', on: 'var(--paper)' },
+  { slug: 'defense', name: 'ביטחון', c: 'var(--green)' },
+  { slug: 'homeland', name: 'ביטחון פנים וחירום', c: 'var(--red)' },
+  { slug: 'health', name: 'בריאות', c: 'var(--sky)' },
+  { slug: 'housing', name: 'דיור ופיתוח יישובים', c: 'var(--pink)' },
+  { slug: 'religion', name: 'דת ומוסדות תורניים', c: 'var(--purple)' },
+  { slug: 'education', name: 'חינוך והשכלה גבוהה', c: 'var(--yellow)' },
+  { slug: 'economy', name: 'כלכלה ותעסוקה', c: 'var(--orange)' },
+  { slug: 'culture', name: 'מדע, תרבות וספורט', c: 'var(--magenta)' },
+  { slug: 'government', name: 'ממשל ושירותים ציבוריים', c: 'var(--blue)' },
+  { slug: 'environment', name: 'סביבה, אנרגיה ומים', c: 'var(--lime)' },
+  { slug: 'welfare', name: 'רווחה וביטחון חברתי', c: 'var(--teal)' },
+  { slug: 'transport', name: 'תחבורה', c: 'var(--brown)' },
 ];
 const N = TOPICS.length;
 const SAMPLE = [2, 0, 3, 0, 0, 2, 0, 0, 0, 1, 0, 0];
@@ -34,3 +34,6 @@ const tokensWord = (n) => (n === 1 ? 'אסימון' : 'אסימונים');
 
 const icon = (id, size, cls = '') =>
   `<svg class="${cls}" width="${size}" height="${size}" aria-hidden="true"><use href="#${id}"/></svg>`;
+
+const countHTML = (i, size = 'm') =>
+  `<span class="count count--${size}" role="img" aria-label="${votes[i]} קולות">${icon('ballot', { xl: 36, l: 26, o: 22 }[size] || 18)}<b>${votes[i]}</b></span>`;

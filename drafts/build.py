@@ -1,14 +1,8 @@
-"""Generates the main-voting layout drafts. Run: python3 drafts/build.py
-Markup is only the shared chrome; drafts/voting.js renders each layout."""
+"""Generates the selected main-voting screen. Run: python3 drafts/build.py
+Markup is only the shared chrome; drafts/voting.js renders the wheel layout."""
 from pathlib import Path
 
 HERE = Path(__file__).parent
-
-STATUS = """<div class="status-bar" aria-hidden="true"><span class="status-time">10:24</span><span class="status-icons">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21 0 8.5C3.3 5.4 7.5 3.5 12 3.5s8.7 1.9 12 5L12 21Z"/></svg>
-<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2 22h20V2L2 22Z"/></svg>
-<svg width="10" height="16" viewBox="0 0 10 18" fill="none"><rect x="3.5" y="0" width="3" height="2" fill="currentColor"/><rect x="0.75" y="1.75" width="8.5" height="15.5" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="2.5" y="6" width="5" height="9.5" fill="currentColor"/></svg>
-</span></div>"""
 
 SYMBOLS = """<svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="token" viewBox="0 0 20 20"><path fill="currentColor" fill-rule="evenodd" d="M10 0a10 10 0 1 0 0 20a10 10 0 1 0 0-20ZM7 7h6v6H7Z"/></symbol>
@@ -16,24 +10,24 @@ SYMBOLS = """<svg width="0" height="0" style="position:absolute" aria-hidden="tr
 </svg>"""
 
 DRAFTS = [
-    ("1-list", "רשימה", "list", "dock"),
-    ("2-table", "רשימה כטבלה", "table", "dock"),
-    ("3-cards", "כרטיסים", "cards", "dock"),
     ("4-wheel", "מניפה", "wheel", "dock"),
-    ("5-overview", "סקירה ועריכה", "overview", "dock"),
 ]
 
 
-def shell(title, main, scripts):
+def shell(title, main, scripts, transition=False):
+    transition_css = (
+        '\n<link rel="stylesheet" href="../assets/css/topic-transition.css" media="(prefers-reduced-motion: no-preference)">'
+        if transition else ""
+    )
     return f"""<!doctype html>
 <html lang="he" dir="rtl"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{title}</title>
-<link rel="stylesheet" href="../styles.css"><link rel="stylesheet" href="drafts.css"></head>
+<link rel="stylesheet" href="../styles.css"><link rel="stylesheet" href="drafts.css">{transition_css}</head>
 <body>{SYMBOLS}
-<div class="device" aria-label="Pixel 11 Pro">
+<div class="device">
   <span class="btn btn-power" aria-hidden="true"></span><span class="btn btn-volume" aria-hidden="true"></span>
-  <div class="device-bezel"><div class="punch-hole" aria-hidden="true"></div>{STATUS}
+  <div class="device-bezel">
 {main}
     <div class="home-indicator" aria-hidden="true"></div>
   </div>
@@ -65,13 +59,13 @@ def page(title, layout, wallet):
           <a class="dock-next" href="summary.html">לסיכום ההצבעה</a>
         </div>
       </section>
-    </main>""", ["ballot.js", "voting.js"])
+    </main>""", ["ballot.js", "voting.js"], transition=(layout == "wheel"))
 
 
 SUMMARY = shell("סיכום ההצבעה · טיוטה", """    <main class="screen v">
       <header class="v-head">
         <div class="top-row">
-          <a class="back s-back" href="index.html">
+          <a class="back s-back" href="4-wheel.html">
             <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true"><path d="M2 1.5L8.5 8L2 14.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/></svg>
             <span>חזרה לעריכה</span>
           </a>
@@ -111,5 +105,5 @@ figcaption a{{color:inherit;opacity:.8;text-underline-offset:3px}}
 iframe{{width:520px;height:1000px;border:0;transform:scale(.7);transform-origin:top center;margin:0 -78px -300px}}
 </style></head><body>
 <nav class="bar"><a href="summary.html" onclick="sessionStorage.setItem('kolenu.summaryFrom', location.href)">סיכום ההצבעה</a><a href="../received.html">מסך הסיום</a></nav>
-<div class="grid">{frames}</div></body></html>""", encoding="utf-8")
+<div class="grid">{frames}</div><p style="text-align:center"><a style="color:inherit" href="archive/index.html">לארכיון הסקיצות הקודמות</a></p></body></html>""", encoding="utf-8")
 print("built", len(DRAFTS), "drafts")

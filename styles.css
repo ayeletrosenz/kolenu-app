@@ -8,18 +8,18 @@
 :root {
   --ink: #292929;
   --paper: #FDFCFA;
-  --orange: #FF7A1A;
-  --pink: #FF3DAE;
-  --yellow: #FFC72C;
-  --sky: #5BC8F0;
-  --lime: #A3CF3F;
-  --teal: #14A89A;
-  --red: #E5383B;
-  --purple: #8E5CD9;
-  --green: #2E9E5B;
-  --blue: #2F54C9;
-  --magenta: #B03A9E;
-  --brown: #8B5A3C;
+  --orange: #FF8931;
+  --pink: #FF52B9;
+  --yellow: #FFCB41;
+  --sky: #6BCDF2;
+  --lime: #ACD451;
+  --teal: #29AEA1;
+  --red: #E84A4D;
+  --purple: #9B6DDD;
+  --green: #429F6B;
+  --blue: #425FCD;
+  --magenta: #B84FA8;
+  --brown: #966A52;
 
   /* Grid: 410px screen, 24px side margins, 4 columns, 16px gutters.
      Vertical rhythm on an 8px unit. */
@@ -79,8 +79,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   /* polished aluminium rail */
   background: linear-gradient(135deg, #8d8d8d 0%, #e6e6e6 18%, #6f6f6f 40%, #cfcfcf 62%, #7a7a7a 82%, #d9d9d9 100%);
   box-shadow:
-    0 30px 80px rgba(0, 0, 0, 0.6),
-    0 8px 20px rgba(0, 0, 0, 0.4);
+    0 30px 80px rgba(41, 41, 41, 0.6),
+    0 8px 20px rgba(41, 41, 41, 0.4);
 }
 
 .device-bezel {
@@ -105,40 +105,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 .btn-power  { top: 168px; height: 64px; }
 .btn-volume { top: 262px; height: 118px; }
-
-.punch-hole {
-  position: absolute;
-  top: 12px;
-  left: 50%;
-  z-index: 3;
-  width: 22px;
-  height: 22px;
-  transform: translateX(-50%);
-  border-radius: 50%;
-  background: radial-gradient(circle at 38% 36%, #2a3446 0 2px, #0a0d14 3px 6px, #000 7px);
-  box-shadow: 0 0 0 1.5px #050505;
-  pointer-events: none;
-}
-
-.status-bar {
-  direction: ltr;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
-  height: 46px;
-  padding: 0 26px 0 30px;
-  background: var(--status-bg, var(--paper));
-  font-family: "Google Sans", "Roboto", system-ui, sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-}
-
-.status-icons {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
 
 .home-indicator {
   position: absolute;
@@ -173,7 +139,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 @media (max-height: 691px) { .device { zoom: 0.6; } }
 
 /* Real phone: drop the chrome, go full bleed */
-@media (max-width: 480px) {
+@media (max-width: 480px), (display-mode: standalone), (display-mode: fullscreen) {
   .device { zoom: 1; }
 
   body {
@@ -192,13 +158,19 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
   .device-bezel {
     height: 100dvh;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+      env(safe-area-inset-bottom) env(safe-area-inset-left);
+    background: var(--screen-edge, var(--paper));
     border: 0;
     border-radius: 0;
   }
 
+  .device-bezel--influence {
+    --influence-inset: env(safe-area-inset-top);
+    padding-top: 0;
+  }
+
   .btn,
-  .punch-hole,
-  .status-bar,
   .home-indicator { display: none; }
 }
 
@@ -224,6 +196,41 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   line-height: 40px;
   font-weight: 800;
 }
+
+.topic-count-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--s2);
+}
+
+.topic-count-title {
+  max-width: 62%;
+  font-size: 26px;
+  line-height: 30px;
+  font-weight: 800;
+}
+
+.influence-header {
+  background: var(--topic-accent, var(--paper));
+  padding-block: var(--influence-inset, 0px) var(--s3);
+}
+
+.influence-header .topic-count-row { margin-top: var(--s1); }
+.influence-header + .intro { padding-top: var(--s3); }
+
+.count {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+}
+.count b { font-weight: 800; }
+.count--m b { font-size: 18px; line-height: 20px; }
+.count--o b { font-size: 24px; line-height: 26px; }
+.count--l b { font-size: 34px; line-height: 36px; }
+.count--xl b { font-size: 64px; line-height: 60px; }
 
 .intro {
   display: flex;
@@ -302,7 +309,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   position: sticky;
   bottom: 0;
   margin-top: auto;
-  padding: 24px var(--margin) calc(28px + env(safe-area-inset-bottom));
+  padding: 24px var(--margin) 28px;
   background: var(--paper);
 }
 
@@ -709,7 +716,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   flex-direction: column;
   gap: var(--para);
   width: 100%;
-  padding: calc(4 * var(--u)) var(--margin) calc(28px + env(safe-area-inset-bottom));
+  padding: calc(4 * var(--u)) var(--margin) 28px;
   background: var(--paper);
 }
 

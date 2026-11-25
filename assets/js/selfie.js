@@ -71,8 +71,7 @@ function verified() {
 
 action.addEventListener('click', () => {
   if (action.classList.contains('is-done')) {
-    /* Until a voting layout is chosen, the drafts stand in for it. */
-    location.href = 'drafts/index.html';
+    location.href = 'drafts/4-wheel.html';
     return;
   }
 
