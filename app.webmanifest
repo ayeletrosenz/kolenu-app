@@ -7,7 +7,7 @@
   "start_url": "./landing.html",
   "scope": "./",
   "display": "fullscreen",
-  "background_color": "#FDFCFA",
+  "background_color": "#6BCDF2",
   "theme_color": "#6BCDF2",
   "icons": [
     {

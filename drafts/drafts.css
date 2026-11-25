@@ -285,6 +285,8 @@
 }
 .w-card.is-front .w-content { visibility: visible; }
 
+.w-content .stepper { margin-block-end: var(--s1); }
+
 @media (hover: none) and (pointer: coarse) {
   .device-bezel:has(.dock--dock) { --bottom-edge: var(--ink); }
 
