@@ -1,7 +1,5 @@
 /* Main-voting drafts. Built on the app's tokens in ../styles.css. */
 
-.v { overflow-y: auto; }
-
 .v-head { padding: 0 var(--margin) var(--s2); }
 
 .help {
@@ -87,11 +85,12 @@
 
 .wallet-label { font-weight: 700; padding-bottom: var(--s1); }
 
-.wallet-grid { display: flex; flex-direction: column; gap: 6px; }
+.wallet-grid { display: flex; flex-direction: column; gap: 6px; direction: rtl; }
 
 /* Rows of 12 sit centred under rows of 13, like a packed tray. */
 .w-row { display: flex; justify-content: center; gap: 6px; }
-.w-row i { display: flex; color: var(--paper); transition: color 0.2s, opacity 0.2s; }
+.w-row i { display: flex; min-width: 0; color: var(--paper); transition: color 0.2s, opacity 0.2s; }
+.w-row svg { max-width: 100%; height: auto; aspect-ratio: 1; }
 .w-row i.spent { opacity: 0.18; }
 .w-row i.next { color: var(--next-token); }
 
@@ -231,6 +230,7 @@
 .v--wheel .v-head {
   position: relative;
   z-index: 1;
+  flex-shrink: 0;
   background: var(--paper);
 }
 
@@ -285,39 +285,22 @@
 }
 .w-card.is-front .w-content { visibility: visible; }
 
-@media (max-width: 480px), (max-width: 1024px) and (hover: none) and (pointer: coarse), (display-mode: standalone), (display-mode: fullscreen) {
-  .v--wheel .v-head { flex-shrink: 0; padding-bottom: var(--s1); }
-  .v--wheel .v-title { font-size: clamp(30px, 5dvh, 34px); line-height: 1.15; }
-  .v--wheel .v-body { flex: 1 1 0; min-height: 206px; }
+@media (hover: none) and (pointer: coarse) {
+  .device-bezel:has(.dock--dock) { --bottom-edge: var(--ink); }
 
-  .v--wheel .w-stage {
-    min-height: 0;
+  .v--wheel .v-body {
+    flex: 1 1 0;
+    min-height: 260px;
     overflow: clip;
   }
 
-  .v--wheel .w-card {
-    top: calc(50% - 6px);
-    height: clamp(184px, 68%, 232px);
-    margin-top: 0;
-    translate: 0 -50%;
-  }
+  .v--wheel .w-stage { min-height: 0; }
+}
 
-  .v--wheel .w-content { padding: 12px; gap: var(--s1); }
-  .v--wheel .topic-count-title { font-size: 24px; line-height: 27px; }
-  .v--wheel .stepper--l button { width: 52px; height: 52px; }
-
-  .v--wheel .dock--dock {
-    padding-block: clamp(10px, 2dvh, 24px);
-  }
-
-  .v--wheel .dock--dock .wallet { padding-bottom: clamp(10px, 2dvh, 28px); }
-  .v--wheel .dock-actions > * { height: 48px; }
-  .v--wheel .wallet-grid,
-  .v--wheel .w-row { gap: clamp(3px, 1.1vw, 6px); }
-  .v--wheel .w-row svg {
-    width: min(20px, 5vw);
-    height: min(20px, 5vw);
-  }
+@media (hover: none) and (pointer: coarse) and (max-height: 780px) {
+  .v--wheel .v-head { padding-block-end: var(--s1); }
+  .v:is(.v--wheel, .v--summary) .dock--dock { padding-block: var(--s2); }
+  .v:is(.v--wheel, .v--summary) .dock--dock .wallet { padding-bottom: var(--s2); }
 }
 
 /* ---------- 5. overview + spotlight ---------- */
@@ -376,49 +359,59 @@
 .o-row[aria-current="true"] .o-track { outline: 2px solid var(--ink); outline-offset: 2px; }
 
 /* ---------- ballot summary ---------- */
-.s-total {
-  margin: 0 var(--margin) var(--s3);
-  padding: var(--s2);
-  background: var(--ink);
-  color: var(--paper);
-  font-size: 16px;
-  line-height: 22px;
-}
-.s-spent { font-size: 22px; line-height: 28px; font-weight: 800; }
+.s-confirm { z-index: 6; }
+
+.v--summary .v-head,
+.s-head { flex-shrink: 0; }
 
 .s-head,
 .s-row {
   display: grid;
-  grid-template-columns: 1fr 64px 64px;
+  grid-template-columns: minmax(0, 1fr) 48px 56px;
   column-gap: 12px;
   align-items: center;
 }
 .s-head {
   padding: 0 var(--margin) var(--s1);
-  padding-inline-start: calc(var(--margin) + var(--s2));
   font-size: 13px;
   line-height: 20px;
   font-weight: 700;
 }
-.s-head span:nth-child(n+2) { white-space: nowrap; }
+.s-head > :first-child { padding-inline-start: var(--s2); }
 
-.s-list { list-style: none; margin: 0 var(--margin) var(--s3); }
+.s-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  list-style: none;
+  margin: 0 var(--margin) var(--s1);
+}
+.s-list:focus-visible { outline-offset: -3px; }
 .s-row {
-  position: relative;
-  padding-block: 12px;
-  padding-inline-start: var(--s2);
+  padding-block: var(--s1);
   border-top: 1px solid var(--ink);
 }
 .s-row:last-child { border-bottom: 1px solid var(--ink); }
-.s-row::before {
-  content: "";
+.s-topic {
+  position: relative;
+  padding-inline: var(--s2);
+}
+.s-name {
+  position: relative;
+  z-index: 1;
+  display: block;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+}
+.s-fill {
   position: absolute;
-  inset-block: 12px;
+  inset-block: 0;
   inset-inline-start: 0;
-  width: 6px;
+  width: calc(6px + (100% - 8px) * var(--share));
   background: var(--c);
 }
-.s-name { font-size: 16px; line-height: 22px; font-weight: 700; }
 /* Icons stack in one column; each number sits right after its icon. */
 .s-row .num { justify-content: flex-start; font-size: 18px; }
 

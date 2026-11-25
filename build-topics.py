@@ -137,7 +137,7 @@ def page(slug, name, subs):
   <div class="device">
     <span class="btn btn-power" aria-hidden="true"></span>
     <span class="btn btn-volume" aria-hidden="true"></span>
-    <div class="device-bezel device-bezel--influence">
+    <div class="device-bezel">
       <main class="screen">
 {ballot_header(slug, name, reading=True)}
 
@@ -163,21 +163,13 @@ def pct_label(v):
     return f"{int(r)}%" if r == int(r) else f"{r:.1f}%"
 
 
-def subtopic_label(title):
-    start, space, last_word = title.rpartition(" ")
-    return (
-        f'<span>{start}{space}<span class="bar-name-end">{last_word}'
-        '<span class="chev" aria-hidden="true"></span></span></span>'
-    )
-
-
 def edit_page(slug, name, subs):
     share = 100 / len(subs)
     bars = "\n".join(
         f"""          <li class="bar" style="--pct: {share:.4f}">
             <div class="bar-row">
               <div class="bar-fill"></div>
-              <button class="bar-name" type="button" aria-expanded="false" aria-controls="desc-{k}">{subtopic_label(title)}</button>
+              <button class="bar-name" type="button" aria-expanded="false" aria-controls="desc-{k}"><span>{title}</span><span class="chev" aria-hidden="true"></span></button>
               <button class="bar-pct" type="button">{pct_label(share)}</button>
             </div>
             <p class="bar-desc" id="desc-{k}" hidden>{desc}</p>
@@ -196,7 +188,7 @@ def edit_page(slug, name, subs):
   <div class="device">
     <span class="btn btn-power" aria-hidden="true"></span>
     <span class="btn btn-volume" aria-hidden="true"></span>
-    <div class="device-bezel device-bezel--influence">
+    <div class="device-bezel">
       <main class="screen">
 {ballot_header(slug, name)}
 

@@ -31,34 +31,14 @@ const subHTML = (i) =>
 const headHTML = (i) =>
   `<div class="t-head"><span class="t-name">${TOPICS[i].name}</span>${subHTML(i)}</div>`;
 
-/* ---------- wallet: 13 / 12 / 13 / 12 ---------- */
+/* ---------- wallet ---------- */
 const screen = document.querySelector('.v');
-const walletGrid = document.querySelector('.wallet-grid');
-const walletLabel = document.querySelector('.wallet-label');
-const tokenEls = [];
-
-[13, 12, 13, 12].forEach((n) => {
-  const row = document.createElement('div');
-  row.className = 'w-row';
-  for (let k = 0; k < n; k++) {
-    const t = document.createElement('i');
-    t.innerHTML = icon('token', 20);
-    row.append(t);
-    tokenEls.push(t);
-  }
-  walletGrid.append(row);
-});
-
+const updateWallet = createWallet(screen.querySelector('.wallet'));
 let previewFor = null;
 
 function renderWallet() {
-  const l = left();
-  const p = previewFor !== null && canAdd(previewFor) ? nextPrice(previewFor) : 0;
-  if (p) walletGrid.style.setProperty('--next-token', TOPICS[previewFor].c);
-  tokenEls.forEach((t, k) => {
-    t.className = k >= l ? 'spent' : k >= l - p ? 'next' : '';
-  });
-  walletLabel.textContent = `נותרו ${l} מתוך ${BUDGET} אסימונים`;
+  const next = previewFor !== null && canAdd(previewFor) ? nextPrice(previewFor) : 0;
+  updateWallet({ next, color: next ? TOPICS[previewFor].c : undefined });
 }
 
 function preview(i) {

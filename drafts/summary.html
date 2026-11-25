@@ -10,7 +10,7 @@
 <div class="device">
   <span class="btn btn-power" aria-hidden="true"></span><span class="btn btn-volume" aria-hidden="true"></span>
   <div class="device-bezel">
-    <main class="screen v">
+    <main class="screen v v--summary">
       <header class="v-head">
         <div class="top-row">
           <a class="back s-back" href="4-wheel.html">
@@ -20,13 +20,30 @@
         </div>
         <h1 class="v-title">סיכום ההצבעה</h1>
       </header>
-      <section class="s-total" aria-live="polite"></section>
-      <div class="s-head" aria-hidden="true"><span>תחום</span><span>קולות</span><span>אסימונים</span></div>
-      <ul class="s-list"></ul>
-      <footer class="footer">
-        <a class="primary" href="../received.html">אישור ושליחה</a>
+      <div class="s-head" aria-hidden="true">
+        <span>תחום</span><span>קולות</span><span>אסימונים</span>
+      </div>
+      <ul class="s-list" tabindex="0" aria-label="קולות ואסימונים לפי תחום"></ul>
+      <footer class="dock dock--dock">
+        <div class="wallet">
+          <p class="wallet-label" aria-live="polite"></p>
+          <div class="wallet-grid" aria-hidden="true"></div>
+        </div>
+        <div class="dock-actions">
+          <a class="dock-next s-send" href="../received.html">אישור ושליחה</a>
+        </div>
       </footer>
     </main>
+    <div class="sheet-scrim s-confirm" hidden>
+      <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="send-title" aria-describedby="send-note">
+        <h2 id="send-title">לשלוח את ההצבעה?</h2>
+        <p id="send-note"></p>
+        <div class="sheet-actions">
+          <a class="secondary secondary--outline s-return" href="4-wheel.html">חזרה להצבעה</a>
+          <a class="primary s-send-anyway" href="../received.html">שלח בכל זאת</a>
+        </div>
+      </section>
+    </div>
     <div class="home-indicator" aria-hidden="true"></div>
   </div>
 </div>

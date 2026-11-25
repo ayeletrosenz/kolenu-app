@@ -3,38 +3,121 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>מה קובעים בהצבעה? · קולנו</title>
+  <title>איך ההצבעה עובדת? · קולנו</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/explanation.css">
 </head>
 <body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="token" viewBox="0 0 20 20"><path fill="currentColor" fill-rule="evenodd" d="M10 0a10 10 0 1 0 0 20a10 10 0 1 0 0-20ZM7 7h6v6H7Z"/></symbol>
+    <symbol id="ballot" viewBox="0 0 24 24"><path fill="currentColor" d="M11 0H24V24H0V11H11Z M9 0V9H0Z"/></symbol>
+    <symbol id="cost-arrow" viewBox="0 0 40 16"><path d="M39 8H2M8.5 1.5L2 8L8.5 14.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></symbol>
+    <symbol id="topic-arrow" viewBox="0 0 10 16"><path d="M8 1.5L1.5 8L8 14.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/></symbol>
+  </svg>
+
   <div class="device">
     <span class="btn btn-power" aria-hidden="true"></span>
     <span class="btn btn-volume" aria-hidden="true"></span>
     <div class="device-bezel" style="--screen-edge: var(--sky)">
-      <main class="screen screen--fit">
-        <section class="hero" style="--hero: var(--sky)">
+      <main class="screen guide" aria-labelledby="guide-title">
+        <header class="guide-header">
           <div class="top-row">
             <a class="close" href="landing.html" aria-label="יציאה מההסבר" data-return>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 2L14 14M14 2L2 14" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/></svg>
             </a>
-            <ol class="progress" aria-label="שלב 1 מתוך 5">
-              <li class="is-active"></li><li></li><li></li><li></li><li></li>
-            </ol>
           </div>
-          <div class="hero-art" aria-hidden="true"></div>
-        </section>
+          <h1 id="guide-title">איך ההצבעה<br>עובדת?</h1>
+          <img class="guide-art guide-art--opening" src="assets/illustrations/Asset%203.svg" width="399" height="535" alt="">
+        </header>
 
-        <h1 class="page-title">מה קובעים בהצבעה?</h1>
+        <div class="guide-flow">
+          <div class="guide-section">
+            <p>בהצבעה אתם קובעים יחד את סדרי העדיפויות לתקציב המדינה. התוצאות מתורגמות לתקציב מחייב בהתאם לעלויות ולאילוצים.</p>
+            <p id="tokens-and-votes">
+              לרשותכם <span class="guide-term">50 אסימונים <svg width="20" height="20" aria-hidden="true"><use href="#token"/></svg></span>,
+              שבעזרתם תוכלו לתת <span class="guide-term">קולות <svg width="20" height="20" aria-hidden="true"><use href="#ballot"/></svg></span>
+              לתחומים שחשובים לכם.
+            </p>
+          </div>
 
-        <section class="body-copy">
-          <p>בהצבעה אתם מביעים אילו תחומים חשובים לכם ועד כמה. יחד עם שאר האזרחים, אתם קובעים את סדרי העדיפויות לתקציב המדינה.</p>
-          <p>לאחר מכן, אלגוריתם מתרגם את סדרי העדיפויות לתקציב, בהתאם לעלויות ולאילוצים. התקציב שמתקבל מחייב את הממשלה.</p>
-          <p>אין צורך להבין איך התקציב עובד כדי להשפיע. אתם בוחרים מה חשוב לכם.</p>
-        </section>
+          <div class="guide-art-bleed guide-art-bleed--flying">
+            <img class="guide-art" src="assets/illustrations/Asset%204.svg" width="930" height="690" alt="">
+          </div>
 
-        <footer class="footer step-nav">
-          <a class="primary step-next" href="explanation-2.html">המשך</a>
-        </footer>
+          <section class="guide-section" id="vote-cost" aria-labelledby="cost-title">
+            <h2 id="cost-title">כמה עולים הקולות?</h2>
+            <p>העלות באסימונים היא מספר הקולות שנתתם לאותו תחום בריבוע. כל קול נוסף באותו תחום עולה יותר.</p>
+
+            <ul class="cost-rows" aria-label="דוגמאות לעלות קולות באותו תחום">
+              <li class="cost-row">
+                <div class="cost-side">
+                  <div class="tokens" style="--n: 1" aria-hidden="true"><svg><use href="#token"/></svg></div>
+                  <span>אסימון אחד</span>
+                </div>
+                <svg class="cost-arrow" width="36" height="16" aria-hidden="true"><use href="#cost-arrow"/></svg>
+                <div class="cost-side">
+                  <div class="ballots" aria-hidden="true"><svg><use href="#ballot"/></svg></div>
+                  <span>קול אחד</span>
+                </div>
+              </li>
+              <li class="cost-row">
+                <div class="cost-side">
+                  <div class="tokens" style="--n: 2" aria-hidden="true"><svg><use href="#token"/></svg><svg><use href="#token"/></svg><svg><use href="#token"/></svg><svg><use href="#token"/></svg></div>
+                  <span>4 אסימונים</span>
+                </div>
+                <svg class="cost-arrow" width="36" height="16" aria-hidden="true"><use href="#cost-arrow"/></svg>
+                <div class="cost-side">
+                  <div class="ballots" aria-hidden="true"><svg><use href="#ballot"/></svg><svg><use href="#ballot"/></svg></div>
+                  <span>2 קולות</span>
+                </div>
+              </li>
+              <li class="cost-row">
+                <div class="cost-side">
+                  <div class="tokens" style="--n: 3" aria-hidden="true"><svg><use href="#token"/></svg><svg><use href="#token"/></svg><svg><use href="#token"/></svg><svg><use href="#token"/></svg><svg><use href="#token"/></svg><svg><use href="#token"/></svg><svg><use href="#token"/></svg><svg><use href="#token"/></svg><svg><use href="#token"/></svg></div>
+                  <span>9 אסימונים</span>
+                </div>
+                <svg class="cost-arrow" width="36" height="16" aria-hidden="true"><use href="#cost-arrow"/></svg>
+                <div class="cost-side">
+                  <div class="ballots" aria-hidden="true"><svg><use href="#ballot"/></svg><svg><use href="#ballot"/></svg><svg><use href="#ballot"/></svg></div>
+                  <span>3 קולות</span>
+                </div>
+              </li>
+            </ul>
+
+            <p>עד השליחה אפשר לשנות את הקולות. הסרת קול מחזירה את האסימונים ששולמו עליו. אפשר לשלוח גם אם נשארו אסימונים.</p>
+          </section>
+
+          <div class="guide-art-bleed">
+            <img class="guide-art guide-art--branch" src="assets/illustrations/Asset%205.svg" width="891" height="752" alt="">
+          </div>
+
+          <div class="guide-section" id="influence">
+            <p><strong>בתחום שנתתם לו קולות</strong>, אפשר לחלק את ההשפעה בין תתי־הנושאים. החלוקה מתחילה שווה ואפשר לשנות אותה. הסכום תמיד 100%. האחוזים מתארים את ההשפעה בתוך התחום, ולא חלק מתקציב המדינה.</p>
+          </div>
+
+          <section class="guide-section" id="topics" aria-labelledby="topics-title">
+            <h2 id="topics-title">על מה מצביעים?</h2>
+            <p>בחרו תחום לקריאה על תתי־הנושאים שלו.</p>
+            <ul class="guide-topics">
+              <li><a id="topic-defense" href="topic-defense.html" style="--topic: var(--green)">ביטחון<svg aria-hidden="true"><use href="#topic-arrow"/></svg></a></li>
+              <li><a id="topic-homeland" href="topic-homeland.html" style="--topic: var(--red)">ביטחון פנים וחירום<svg aria-hidden="true"><use href="#topic-arrow"/></svg></a></li>
+              <li><a id="topic-health" href="topic-health.html" style="--topic: var(--sky)">בריאות<svg aria-hidden="true"><use href="#topic-arrow"/></svg></a></li>
+              <li><a id="topic-housing" href="topic-housing.html" style="--topic: var(--pink)">דיור ופיתוח יישובים<svg aria-hidden="true"><use href="#topic-arrow"/></svg></a></li>
+              <li><a id="topic-religion" href="topic-religion.html" style="--topic: var(--purple)">דת ומוסדות תורניים<svg aria-hidden="true"><use href="#topic-arrow"/></svg></a></li>
+              <li><a id="topic-education" href="topic-education.html" style="--topic: var(--yellow)">חינוך והשכלה גבוהה<svg aria-hidden="true"><use href="#topic-arrow"/></svg></a></li>
+              <li><a id="topic-economy" href="topic-economy.html" style="--topic: var(--orange)">כלכלה ותעסוקה<svg aria-hidden="true"><use href="#topic-arrow"/></svg></a></li>
+              <li><a id="topic-culture" href="topic-culture.html" style="--topic: var(--teal)">מדע, תרבות וספורט<svg aria-hidden="true"><use href="#topic-arrow"/></svg></a></li>
+              <li><a id="topic-government" href="topic-government.html" style="--topic: var(--blue)">ממשל ושירותים ציבוריים<svg aria-hidden="true"><use href="#topic-arrow"/></svg></a></li>
+              <li><a id="topic-environment" href="topic-environment.html" style="--topic: var(--lime)">סביבה, אנרגיה ומים<svg aria-hidden="true"><use href="#topic-arrow"/></svg></a></li>
+              <li><a id="topic-welfare" href="topic-welfare.html" style="--topic: var(--magenta)">רווחה וביטחון חברתי<svg aria-hidden="true"><use href="#topic-arrow"/></svg></a></li>
+              <li><a id="topic-transport" href="topic-transport.html" style="--topic: var(--brown)">תחבורה<svg aria-hidden="true"><use href="#topic-arrow"/></svg></a></li>
+            </ul>
+          </section>
+
+          <footer class="guide-end" id="guide-end">
+            <a class="primary" href="privacy.html" data-return>להצבעה</a>
+          </footer>
+        </div>
       </main>
       <div class="home-indicator" aria-hidden="true"></div>
     </div>

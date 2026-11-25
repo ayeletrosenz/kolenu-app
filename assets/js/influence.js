@@ -1,4 +1,25 @@
 const rows = [...document.querySelectorAll('.bars .bar')];
+const labels = rows.map((row) => row.querySelector('.bar-name > span'));
+
+function alignChevron(label) {
+  const range = document.createRange();
+  range.selectNodeContents(label);
+  const lines = [...range.getClientRects()];
+  if (!lines.length || !label.offsetWidth) return;
+
+  // Flex reserves room for wrapping. Measure the visible text to close the unused gap.
+  const box = label.getBoundingClientRect();
+  const textLeft = Math.min(...lines.map(({ left }) => left));
+  const scale = box.width / label.offsetWidth;
+  label.nextElementSibling.style.translate = `${Math.max(0, (textLeft - box.left) / scale)}px 0`;
+}
+
+const labelObserver = new ResizeObserver((entries) => {
+  entries.forEach(({ target }) => alignChevron(target));
+});
+labels.forEach((label) => labelObserver.observe(label));
+document.fonts.ready.then(() => labels.forEach(alignChevron));
+
 const n = rows.length;
 const equal = () => rows.map(() => 100 / n);
 /* Each topic keeps its split for the session, so returning to it shows what was set before. */

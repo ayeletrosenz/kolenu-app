@@ -11,10 +11,10 @@ const TOPICS = [
   { slug: 'religion', name: 'דת ומוסדות תורניים', c: 'var(--purple)' },
   { slug: 'education', name: 'חינוך והשכלה גבוהה', c: 'var(--yellow)' },
   { slug: 'economy', name: 'כלכלה ותעסוקה', c: 'var(--orange)' },
-  { slug: 'culture', name: 'מדע, תרבות וספורט', c: 'var(--magenta)' },
+  { slug: 'culture', name: 'מדע, תרבות וספורט', c: 'var(--teal)' },
   { slug: 'government', name: 'ממשל ושירותים ציבוריים', c: 'var(--blue)' },
   { slug: 'environment', name: 'סביבה, אנרגיה ומים', c: 'var(--lime)' },
-  { slug: 'welfare', name: 'רווחה וביטחון חברתי', c: 'var(--teal)' },
+  { slug: 'welfare', name: 'רווחה וביטחון חברתי', c: 'var(--magenta)' },
   { slug: 'transport', name: 'תחבורה', c: 'var(--brown)' },
 ];
 const N = TOPICS.length;
@@ -36,3 +36,33 @@ const icon = (id, size, cls = '') =>
 
 const countHTML = (i, size = 'm') =>
   `<span class="count count--${size}" role="img" aria-label="${votes[i]} קולות">${icon('ballot', { xl: 36, l: 26, o: 22 }[size] || 18)}<b>${votes[i]}</b></span>`;
+
+/* The voting screen and summary use the same four rows of tokens. */
+function createWallet(wallet) {
+  const grid = wallet.querySelector('.wallet-grid');
+  const label = wallet.querySelector('.wallet-label');
+  const tokens = [];
+
+  [13, 12, 13, 12].forEach((size) => {
+    const row = document.createElement('div');
+    row.className = 'w-row';
+    for (let i = 0; i < size; i++) {
+      const token = document.createElement('i');
+      token.innerHTML = icon('token', 20);
+      row.append(token);
+      tokens.push(token);
+    }
+    grid.append(row);
+  });
+
+  return ({ next = 0, color } = {}) => {
+    const remaining = left();
+    const used = BUDGET - remaining;
+    if (color) grid.style.setProperty('--next-token', color);
+    tokens.forEach((token, i) => {
+      token.className = i < used ? 'spent' : i < used + next ? 'next' : '';
+    });
+    const count = `נותרו ${remaining} מתוך ${BUDGET} אסימונים`;
+    if (label.textContent !== count) label.textContent = count;
+  };
+}

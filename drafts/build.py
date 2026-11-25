@@ -9,6 +9,11 @@ SYMBOLS = """<svg width="0" height="0" style="position:absolute" aria-hidden="tr
   <symbol id="ballot" viewBox="0 0 24 24"><path fill="currentColor" d="M11 0H24V24H0V11H11Z"/><path fill="currentColor" d="M9 0V9H0Z"/></symbol>
 </svg>"""
 
+WALLET = """        <div class="wallet">
+          <p class="wallet-label" aria-live="polite"></p>
+          <div class="wallet-grid" aria-hidden="true"></div>
+        </div>"""
+
 DRAFTS = [
     ("4-wheel", "מניפה", "wheel", "dock"),
 ]
@@ -50,10 +55,7 @@ def page(title, layout, wallet):
       </header>
       <div class="v-body"></div>
       <section class="dock dock--{wallet}">
-        <div class="wallet">
-          <p class="wallet-label" aria-live="polite"></p>
-          <div class="wallet-grid" aria-hidden="true"></div>
-        </div>
+{WALLET}
         <div class="dock-actions">
           <button class="dock-reset" type="button">איפוס</button>
           <a class="dock-next" href="summary.html">לסיכום ההצבעה</a>
@@ -62,7 +64,7 @@ def page(title, layout, wallet):
     </main>""", ["ballot.js", "voting.js"], transition=(layout == "wheel"))
 
 
-SUMMARY = shell("סיכום ההצבעה · טיוטה", """    <main class="screen v">
+SUMMARY = shell("סיכום ההצבעה · טיוטה", f"""    <main class="screen v v--summary">
       <header class="v-head">
         <div class="top-row">
           <a class="back s-back" href="4-wheel.html">
@@ -72,13 +74,27 @@ SUMMARY = shell("סיכום ההצבעה · טיוטה", """    <main class="scr
         </div>
         <h1 class="v-title">סיכום ההצבעה</h1>
       </header>
-      <section class="s-total" aria-live="polite"></section>
-      <div class="s-head" aria-hidden="true"><span>תחום</span><span>קולות</span><span>אסימונים</span></div>
-      <ul class="s-list"></ul>
-      <footer class="footer">
-        <a class="primary" href="../received.html">אישור ושליחה</a>
+      <div class="s-head" aria-hidden="true">
+        <span>תחום</span><span>קולות</span><span>אסימונים</span>
+      </div>
+      <ul class="s-list" tabindex="0" aria-label="קולות ואסימונים לפי תחום"></ul>
+      <footer class="dock dock--dock">
+{WALLET}
+        <div class="dock-actions">
+          <a class="dock-next s-send" href="../received.html">אישור ושליחה</a>
+        </div>
       </footer>
-    </main>""", ["ballot.js", "summary.js"])
+    </main>
+    <div class="sheet-scrim s-confirm" hidden>
+      <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="send-title" aria-describedby="send-note">
+        <h2 id="send-title">לשלוח את ההצבעה?</h2>
+        <p id="send-note"></p>
+        <div class="sheet-actions">
+          <a class="secondary secondary--outline s-return" href="4-wheel.html">חזרה להצבעה</a>
+          <a class="primary s-send-anyway" href="../received.html">שלח בכל זאת</a>
+        </div>
+      </section>
+    </div>""", ["ballot.js", "summary.js"])
 
 for slug, title, layout, wallet in DRAFTS:
     (HERE / f"{slug}.html").write_text(page(title, layout, wallet), encoding="utf-8")

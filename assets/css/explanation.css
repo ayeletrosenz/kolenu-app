@@ -1,0 +1,114 @@
+/* A single reading flow inside the same scrollable screen as the prototype. */
+.guide { --guide-art-height: 346px; }
+
+.guide-header {
+  --guide-blue-cutoff: 1.4cm;
+  flex-shrink: 0;
+  display: grid;
+  gap: var(--s2);
+  padding: 0 var(--margin) var(--s4);
+  background: linear-gradient(to bottom, var(--sky) calc(100% - var(--guide-blue-cutoff)), transparent 0);
+}
+
+.guide-header h1 {
+  font-size: 34px;
+  line-height: 40px;
+  font-weight: 800;
+}
+
+.guide-flow {
+  display: grid;
+  gap: var(--s4);
+  flex-shrink: 0;
+  padding: var(--s3) var(--margin) var(--s4);
+}
+
+.guide-art {
+  display: block;
+  flex: none;
+  width: auto;
+  height: var(--guide-art-height);
+}
+
+.guide-art--opening {
+  justify-self: end;
+  margin-block-start: -12px;
+}
+
+.guide-art-bleed {
+  display: flex;
+  justify-content: flex-end;
+  min-width: 0;
+  margin-inline: calc(-1 * var(--margin));
+  overflow: hidden;
+}
+
+.guide-art-bleed--flying { justify-content: flex-start; }
+.guide-art-bleed--flying .guide-art {
+  height: calc(var(--guide-art-height) - 76px);
+  margin-inline-start: -12px;
+}
+
+.guide-art--branch {
+  width: calc(100% + 8px);
+  height: auto;
+  margin-inline: -4px;
+}
+
+.guide-term { white-space: nowrap; }
+.guide-term svg { vertical-align: middle; }
+
+.guide-section {
+  display: grid;
+  gap: var(--s1);
+}
+
+.guide-section h2 {
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 800;
+}
+
+.guide .cost-rows { margin-block: var(--s1); }
+.guide .cost-row { align-items: stretch; }
+.guide .cost-side > div { margin-block: auto; }
+.guide .cost-arrow { align-self: center; }
+.guide .tokens { --t: 26px; }
+.guide .ballots svg { width: 32px; height: 32px; }
+
+.guide-topics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s1);
+  list-style: none;
+  margin-top: var(--s1);
+}
+
+.guide-topics a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s1);
+  min-height: 80px;
+  height: 100%;
+  padding: var(--s2);
+  background: var(--topic);
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.guide-topics a:is(:hover, :focus-visible) {
+  outline: 2px solid var(--ink);
+  outline-offset: -4px;
+}
+
+.guide-topics svg {
+  flex-shrink: 0;
+  width: 9px;
+  height: 14px;
+}
+
+.guide-end { padding-top: var(--s1); }

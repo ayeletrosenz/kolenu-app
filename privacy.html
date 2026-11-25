@@ -11,7 +11,7 @@
     <span class="btn btn-power" aria-hidden="true"></span>
     <span class="btn btn-volume" aria-hidden="true"></span>
     <div class="device-bezel" style="--screen-edge: var(--sky)">
-      <main class="screen screen--fit">
+      <main class="screen privacy">
         <section class="hero hero--topic" style="--hero: var(--sky)">
           <div class="top-row">
             <a class="back privacy-back" href="landing.html">
@@ -25,7 +25,7 @@
         <h1 class="page-title">ההצבעה שלכם חשאית</h1>
 
         <section class="body-copy body-copy--tight">
-          <p>ההזדהות מאמתת את זכאותכם להצביע, וההצבעה שלכם מוצפנת ונספרת לאחר שפרטי הזיהוי הופרדו ממנה.</p>
+          <p>ההזדהות מאמתת את זכאותכם להצביע, והצבעתכם מוצפנת ונספרת לאחר שפרטי הזיהוי הופרדו ממנה.</p>
         </section>
 
         <form class="id-form" id="id-form" aria-labelledby="id-title">
@@ -53,7 +53,9 @@
   </div>
   <script>
     /* Fixed links, not history: identification and the video otherwise bounce between each other forever. */
-    if (/explanation-5\.html/.test(document.referrer)) document.querySelector('.privacy-back').href = 'explanation-5.html';
+    if (/\/explanation-[15]\.html(?:[?#]|$)/.test(document.referrer)) {
+      document.querySelector('.privacy-back').href = 'explanation-1.html#guide-end';
+    }
 
     /* Mock: any input is accepted. */
     document.getElementById('id-form').addEventListener('submit', (e) => {
