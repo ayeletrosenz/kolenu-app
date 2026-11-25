@@ -200,7 +200,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   body {
     --margin: clamp(16px, 6vw, 24px);
     display: block;
-    height: 100dvh;
+    height: var(--visible-viewport-height, 100dvh);
     min-height: 0;
     padding: 0;
     background: var(--paper);
@@ -230,6 +230,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
     );
   }
 
+  .device-bezel:has(> .privacy) { container: privacy-viewport / size; }
+
   .device-bezel::before,
   .device-bezel::after,
   .device > .btn,
@@ -240,7 +242,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .selfie .camera { min-height: clamp(144px, 25dvh, 240px); }
 }
 
-@media (hover: none) and (pointer: coarse) and (max-height: 700px) {
+@container privacy-viewport (max-height: 700px) {
   .privacy {
     --s2: 8px;
     --s3: 12px;
@@ -290,6 +292,10 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   font-size: 26px;
   line-height: 30px;
   font-weight: 800;
+}
+
+[data-vote-reading] .topic-count-row:not(:has(> .count)) .topic-count-title {
+  max-width: 100%;
 }
 
 .influence-header {

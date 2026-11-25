@@ -43,7 +43,10 @@
   overflow: hidden;
 }
 
-.guide-art-bleed--flying { justify-content: flex-start; }
+.guide-art-bleed--flying {
+  justify-content: flex-start;
+  margin-block-end: var(--s2);
+}
 .guide-art-bleed--flying .guide-art {
   height: calc(var(--guide-art-height) - 76px);
   margin-inline-start: -12px;
@@ -56,7 +59,10 @@
 }
 
 .guide-term { white-space: nowrap; }
-.guide-term svg { vertical-align: middle; }
+.guide-term svg {
+  margin-inline: 2px;
+  vertical-align: middle;
+}
 
 .guide-section {
   display: grid;
@@ -100,7 +106,7 @@
   text-decoration: none;
 }
 
-.guide-topics a:is(:hover, :focus-visible) {
+.guide-topics a:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: -4px;
 }

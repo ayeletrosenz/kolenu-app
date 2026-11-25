@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
   <title>ההצבעה שלכם חשאית · קולנו</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=privacy-viewport">
 </head>
 <body>
   <div class="device">
@@ -52,6 +52,20 @@
     </div>
   </div>
   <script>
+    /* Keep the submit button inside the visible area while Chrome resizes or restores the page. */
+    const viewport = window.visualViewport;
+    if (viewport) {
+      const fitViewport = () => {
+        if (viewport.scale === 1 && viewport.height > 0) {
+          document.documentElement.style.setProperty('--visible-viewport-height', `${viewport.height}px`);
+        }
+      };
+      viewport.addEventListener('resize', fitViewport);
+      window.addEventListener('pageshow', fitViewport);
+      document.addEventListener('visibilitychange', fitViewport);
+      fitViewport();
+    }
+
     /* Fixed links, not history: identification and the video otherwise bounce between each other forever. */
     if (/\/explanation-[15]\.html(?:[?#]|$)/.test(document.referrer)) {
       document.querySelector('.privacy-back').href = 'explanation-1.html#guide-end';
