@@ -144,14 +144,14 @@ def pct_label(v):
 def edit_page(slug, name, subs):
     share = 100 / len(subs)
     bars = "\n".join(
-        f"""          <li class="bar" style="--pct: {share:.4f}; --color: var(--{color})">
+        f"""          <li class="bar" style="--pct: {share:.4f}">
             <div class="bar-row">
               <div class="bar-fill"></div>
               <button class="bar-name" type="button" aria-expanded="false" aria-controls="desc-{k}"><span>{title}</span><span class="chev" aria-hidden="true"></span></button>
               <button class="bar-pct" type="button">{pct_label(share)}</button>
             </div>
             <p class="bar-desc" id="desc-{k}" hidden>{desc}</p>
-          </li>""" for k, (color, title, desc) in enumerate(subs, 1))
+          </li>""" for k, (_, title, desc) in enumerate(subs, 1))
     back = 'onclick="if (history.length > 1) { history.back(); return false; }"'
     return f"""<!doctype html>
 <html lang="he" dir="rtl">

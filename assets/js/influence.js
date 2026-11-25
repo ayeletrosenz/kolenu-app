@@ -1,9 +1,18 @@
 const header = document.querySelector('.influence-header');
 const topicIndex = TOPICS.findIndex(({ slug }) => slug === header.dataset.topic);
-header.style.setProperty('--topic-accent', TOPICS[topicIndex].c);
+const topicColor = TOPICS[topicIndex].c;
+header.style.setProperty('--topic-accent', topicColor);
 header.querySelector('.topic-count-row').insertAdjacentHTML('beforeend', countHTML(topicIndex, 'xl'));
 
 const rows = [...document.querySelectorAll('.bars .bar')];
+const barColors = TOPICS.map(({ c }) => c)
+  .filter((color) => ![topicColor, 'var(--blue)', 'var(--brown)'].includes(color));
+rows.forEach((row) => {
+  const pick = Math.floor(Math.random() * barColors.length);
+  const [color] = barColors.splice(pick, 1);
+  row.style.setProperty('--color', color);
+});
+
 const n = rows.length;
 const equal = () => rows.map(() => 100 / n);
 /* Each topic keeps its split for the session, so returning to it shows what was set before. */
@@ -11,7 +20,7 @@ const KEY = `kolenu.influence:${location.pathname.split('/').pop()}`;
 const saved = JSON.parse(sessionStorage.getItem(KEY) || 'null');
 /* Opened from a topic with no votes: the split is shown at 0% and can't be edited.
    A saved split stays stored (it returns with the topic's first vote) but isn't shown as active. */
-const locked = new URLSearchParams(location.search).has('novotes');
+const locked = votes[topicIndex] === 0;
 let values = locked ? rows.map(() => 0) : Array.isArray(saved) && saved.length === n ? saved : equal();
 
 if (locked) {

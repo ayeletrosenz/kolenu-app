@@ -285,6 +285,39 @@
 }
 .w-card.is-front .w-content { visibility: visible; }
 
+@media (max-width: 480px), (max-height: 480px) and (pointer: coarse), (display-mode: standalone), (display-mode: fullscreen) {
+  .v--wheel .v-head { flex-shrink: 0; }
+  .v--wheel .v-body { flex: 1 1 0; min-height: 220px; }
+
+  .v--wheel .w-stage {
+    min-height: 0;
+    overflow: clip;
+  }
+
+  .v--wheel .w-card {
+    top: calc(50% - 6px);
+    height: clamp(190px, 68%, 232px);
+    margin-top: 0;
+    translate: 0 -50%;
+  }
+
+  .v--wheel .w-content { padding: 12px; gap: var(--s1); }
+  .v--wheel .topic-count-title { font-size: 24px; line-height: 27px; }
+  .v--wheel .stepper--l button { width: 52px; height: 52px; }
+
+  .v--wheel .dock--dock {
+    padding-block: clamp(12px, 2.5dvh, 24px) clamp(12px, 3dvh, 28px);
+  }
+
+  .v--wheel .dock--dock .wallet { padding-bottom: clamp(12px, 2.5dvh, 32px); }
+  .v--wheel .wallet-grid,
+  .v--wheel .w-row { gap: clamp(3px, 1.1vw, 6px); }
+  .v--wheel .w-row svg {
+    width: min(20px, 5vw);
+    height: min(20px, 5vw);
+  }
+}
+
 /* ---------- 5. overview + spotlight ---------- */
 .o-spot {
   display: flex;

@@ -20,7 +20,7 @@ const stepperHTML = (i, size = 'm') =>
 
 /* Always the influence split; without votes it opens locked at 0%. */
 const topicHref = (i) =>
-  new URL(`topic-${TOPICS[i].slug}-edit.html${votes[i] > 0 ? '' : '?novotes'}`, appRoot).href;
+  new URL(`topic-${TOPICS[i].slug}-edit.html`, appRoot).href;
 
 const subHTML = (i) =>
   `<a class="sub" href="${topicHref(i)}">תתי־נושאים</a>`;
@@ -285,7 +285,9 @@ const wheelLayout = () => {
     if (e.type === 'pointercancel') return goTo(Math.round(pos));
     const hit = document.elementFromPoint(e.clientX, e.clientY);
     if (!moved && Math.abs(e.clientX - startX) <= 4 && card && card.contains(hit)) {
-      return openTopic(card);
+      if (card.classList.contains('is-front')) return openTopic(card);
+      const distance = around(Number(card.dataset.i) - pos);
+      return goTo(Math.round(pos + distance));
     }
     goTo(Math.round(pos - (vel * 220) / STRIP));
   };

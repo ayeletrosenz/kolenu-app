@@ -139,7 +139,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 @media (max-height: 691px) { .device { zoom: 0.6; } }
 
 /* Real phone: drop the chrome, go full bleed */
-@media (max-width: 480px), (display-mode: standalone), (display-mode: fullscreen) {
+@media (max-width: 480px), (max-height: 480px) and (pointer: coarse), (display-mode: standalone), (display-mode: fullscreen) {
   .device { zoom: 1; }
 
   body {
@@ -1032,4 +1032,47 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   font-size: 18px;
   line-height: 24px;
   font-weight: 700;
+}
+
+/* Compact the app's decorative space and controls on phone-sized viewports. */
+@media (max-width: 480px), (max-height: 480px) and (pointer: coarse), (display-mode: standalone), (display-mode: fullscreen) {
+  .screen { scroll-padding-block-end: 84px; }
+
+  .footer,
+  .received .footer { padding-block: var(--s2); }
+  .footer .primary,
+  .footer .secondary,
+  .step-back { height: 52px; }
+  .step-back { width: 52px; }
+
+  .wordmark,
+  .received-title { padding-top: clamp(16px, 4dvh, 48px); }
+  .wordmark { font-size: clamp(60px, 12dvh, 96px); line-height: 1.1; }
+  .received-title { font-size: clamp(36px, 7dvh, 52px); line-height: 1.1; }
+  .received-art { padding-block: var(--s2); }
+  .art-placeholder { min-height: 0; }
+
+  .hero { height: clamp(96px, 24dvh, 288px); }
+  .hero--topic { height: clamp(80px, 19dvh, 224px); }
+  .hero--bar { height: auto; }
+  .page-title,
+  .body-copy { padding-top: var(--s2); }
+  .cost-row,
+  .subtopics li { padding-block: var(--s1); }
+  .subtopics { padding-block: var(--s2) var(--s3); }
+
+  .id-title { margin-top: var(--s2); padding-top: var(--s2); }
+  .fields { gap: var(--s2); }
+  .field input { height: 48px; }
+  .camera {
+    min-height: clamp(144px, 27dvh, 240px);
+    margin-top: var(--s2);
+  }
+
+  .influence-header { padding-block-end: var(--s2); }
+  .influence-header + .intro { padding-top: var(--s2); }
+  .bars-head { padding-block: var(--s3) var(--s2); }
+  .bars--live .bar-row { height: 64px; }
+  .sheet-scrim { padding-bottom: env(safe-area-inset-bottom); }
+  .sheet { max-height: 100%; overflow-y: auto; }
 }

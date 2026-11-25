@@ -18,14 +18,13 @@ const TOPICS = [
   { slug: 'transport', name: 'תחבורה', c: 'var(--brown)' },
 ];
 const N = TOPICS.length;
-const SAMPLE = [2, 0, 3, 0, 0, 2, 0, 0, 0, 1, 0, 0];
 
 /* The ballot survives visits to help, reading, influence and summary pages for the session. */
 const VOTES_KEY = 'kolenu.votes';
 /* The voting screen the summary was opened from, so חזרה לעריכה lands back on it. */
 const SUMMARY_FROM_KEY = 'kolenu.summaryFrom';
 const savedVotes = JSON.parse(sessionStorage.getItem(VOTES_KEY) || 'null');
-let votes = Array.isArray(savedVotes) && savedVotes.length === N ? savedVotes : SAMPLE.slice();
+let votes = Array.isArray(savedVotes) && savedVotes.length === N ? savedVotes : Array(N).fill(0);
 const saveVotes = () => sessionStorage.setItem(VOTES_KEY, JSON.stringify(votes));
 
 const spent = () => votes.reduce((s, v) => s + v * v, 0);

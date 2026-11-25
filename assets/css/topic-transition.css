@@ -20,8 +20,8 @@
 }
 
 ::view-transition-group(*) {
-  animation-duration: 240ms;
-  animation-timing-function: cubic-bezier(.2, .7, .25, 1);
+  animation-duration: 200ms;
+  animation-timing-function: ease-out;
 }
 
 ::view-transition-group(topic-card) { z-index: 1; }
