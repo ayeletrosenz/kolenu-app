@@ -200,7 +200,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   body {
     --margin: clamp(16px, 6vw, 24px);
     display: block;
-    height: var(--visible-viewport-height, 100dvh);
+    height: min(100dvh, var(--visible-viewport-height, 100svh));
     min-height: 0;
     padding: 0;
     background: var(--paper);
@@ -217,6 +217,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   }
 
   .device-bezel {
+    container: app-viewport / size;
     --inset-top: env(safe-area-inset-top, 0px);
     --insets: var(--inset-top) env(safe-area-inset-right, 0px)
       env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
@@ -230,8 +231,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
     );
   }
 
-  .device-bezel:has(> .privacy) { container: privacy-viewport / size; }
-
   .device-bezel::before,
   .device-bezel::after,
   .device > .btn,
@@ -239,10 +238,10 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
   .sheet-scrim { padding: var(--insets); }
   .privacy { scroll-padding-block-end: 116px; }
-  .selfie .camera { min-height: clamp(144px, 25dvh, 240px); }
+  .selfie .camera { min-height: clamp(144px, 25cqh, 240px); }
 }
 
-@container privacy-viewport (max-height: 700px) {
+@container app-viewport (max-height: 700px) {
   .privacy {
     --s2: 8px;
     --s3: 12px;

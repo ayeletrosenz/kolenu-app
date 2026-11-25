@@ -129,7 +129,8 @@ def page(slug, name, subs):
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{name} · קולנו</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=app-viewport">
+  <script defer src="assets/js/app-viewport.js"></script>
 {TRANSITION_CSS}
 </head>
 <body>
@@ -180,7 +181,8 @@ def edit_page(slug, name, subs):
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{name} · חלוקת השפעה · קולנו</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=app-viewport">
+  <script defer src="assets/js/app-viewport.js"></script>
 {TRANSITION_CSS}
 </head>
 <body>

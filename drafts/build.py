@@ -28,7 +28,9 @@ def shell(title, main, scripts, transition=False):
 <html lang="he" dir="rtl"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{title}</title>
-<link rel="stylesheet" href="../styles.css"><link rel="stylesheet" href="drafts.css">{transition_css}</head>
+<link rel="stylesheet" href="../styles.css?v=app-viewport">
+<script defer src="../assets/js/app-viewport.js"></script>
+<link rel="stylesheet" href="drafts.css?v=app-viewport">{transition_css}</head>
 <body>{SYMBOLS}
 <div class="device">
   <span class="btn btn-power" aria-hidden="true"></span><span class="btn btn-volume" aria-hidden="true"></span>

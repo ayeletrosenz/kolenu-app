@@ -297,7 +297,7 @@
   .v--wheel .w-stage { min-height: 0; }
 }
 
-@media (hover: none) and (pointer: coarse) and (max-height: 780px) {
+@container app-viewport (max-height: 780px) {
   .v--wheel .v-head { padding-block-end: var(--s1); }
   .v:is(.v--wheel, .v--summary) .dock--dock { padding-block: var(--s2); }
   .v:is(.v--wheel, .v--summary) .dock--dock .wallet { padding-bottom: var(--s2); }
