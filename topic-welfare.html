@@ -5,51 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>רווחה וביטחון חברתי · קולנו</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/topic-transition.css" media="(prefers-reduced-motion: no-preference)">
 </head>
 <body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="ballot" viewBox="0 0 24 24"><path fill="currentColor" d="M11 0H24V24H0V11H11Z M9 0V9H0Z"/></symbol>
+  </svg>
   <div class="device">
     <span class="btn btn-power" aria-hidden="true"></span>
     <span class="btn btn-volume" aria-hidden="true"></span>
-    <div class="device-bezel" style="--screen-edge: var(--sky)">
+    <div class="device-bezel device-bezel--influence">
       <main class="screen">
-        <section class="hero hero--topic" style="--hero: var(--sky)">
-          <div class="top-row">
-            <a class="back" href="explanation-5.html#topic-welfare" onclick="if (history.length > 1) { history.back(); return false; }">
-              <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true"><path d="M2 1.5L8.5 8L2 14.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/></svg>
-              <span>חזרה</span>
-            </a>
+        <header class="top influence-header" data-topic="welfare" data-vote-reading>
+          <a class="back" href="explanation-5.html#topic-welfare" onclick="if (history.length > 1) { history.back(); return false; }">
+            <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true"><path d="M2 1.5L8.5 8L2 14.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/></svg>
+            <span>חזרה</span>
+          </a>
+          <div class="topic-count-row">
+            <h1 class="topic-count-title">רווחה וביטחון חברתי</h1>
           </div>
-          <div class="hero-art" aria-hidden="true"></div>
-        </section>
+        </header>
 
-        <h1 class="page-title">רווחה וביטחון חברתי</h1>
+        <div data-no-vote-note hidden>
+          <p class="intro">לא נתתם קול לתחום הזה. תנו לו קול כדי לחלק את ההשפעה בין תתי־הנושאים.</p>
+        </div>
 
         <ul class="subtopics">
-          <li style="--color: var(--teal)">
+          <li>
             <h2>קצבאות וביטחון סוציאלי</h2>
             <p>השתתפות תקציב המדינה במימון קצבאות ותשלומים דרך הביטוח הלאומי</p>
           </li>
-          <li style="--color: var(--red)">
+          <li>
             <h2>ילדים, נוער ומשפחות בסיכון</h2>
             <p>הגנה, ליווי וטיפול בקהילה ובמסגרות חוץ־ביתיות</p>
           </li>
-          <li style="--color: var(--yellow)">
+          <li>
             <h2>שירותים לבעלי מוגבלויות</h2>
             <p>דיור נתמך, מרכזי יום, תעסוקה נתמכת ושירותים לחיים בקהילה</p>
           </li>
-          <li style="--color: var(--purple)">
+          <li>
             <h2>שירותים לאזרחים ותיקים</h2>
             <p>ליווי חברתי, מסגרות יום ותמיכה בקהילה ובמסגרות מגורים</p>
           </li>
-          <li style="--color: var(--orange)">
+          <li>
             <h2>סיוע לניצולי שואה</h2>
             <p>תגמולים, טיפול ושירותי תמיכה ייעודיים</p>
           </li>
-          <li style="--color: var(--lime)">
+          <li>
             <h2>סיוע בעוני ובמצוקה</h2>
             <p>סיוע חומרי, ביטחון תזונתי וליווי אנשים ומשפחות במצוקה</p>
           </li>
-          <li style="--color: var(--pink)">
+          <li>
             <h2>קליטת עלייה</h2>
             <p>סל קליטה, לימוד עברית וליווי להשתלבות בחברה</p>
           </li>
@@ -58,5 +64,7 @@
       <div class="home-indicator" aria-hidden="true"></div>
     </div>
   </div>
+  <script src="drafts/ballot.js"></script>
+  <script src="assets/js/topic-header.js"></script>
 </body>
 </html>

@@ -5,39 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>תחבורה · קולנו</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/topic-transition.css" media="(prefers-reduced-motion: no-preference)">
 </head>
 <body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="ballot" viewBox="0 0 24 24"><path fill="currentColor" d="M11 0H24V24H0V11H11Z M9 0V9H0Z"/></symbol>
+  </svg>
   <div class="device">
     <span class="btn btn-power" aria-hidden="true"></span>
     <span class="btn btn-volume" aria-hidden="true"></span>
-    <div class="device-bezel" style="--screen-edge: var(--sky)">
+    <div class="device-bezel device-bezel--influence">
       <main class="screen">
-        <section class="hero hero--topic" style="--hero: var(--sky)">
-          <div class="top-row">
-            <a class="back" href="explanation-5.html#topic-transport" onclick="if (history.length > 1) { history.back(); return false; }">
-              <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true"><path d="M2 1.5L8.5 8L2 14.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/></svg>
-              <span>חזרה</span>
-            </a>
+        <header class="top influence-header" data-topic="transport" data-vote-reading>
+          <a class="back" href="explanation-5.html#topic-transport" onclick="if (history.length > 1) { history.back(); return false; }">
+            <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true"><path d="M2 1.5L8.5 8L2 14.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/></svg>
+            <span>חזרה</span>
+          </a>
+          <div class="topic-count-row">
+            <h1 class="topic-count-title">תחבורה</h1>
           </div>
-          <div class="hero-art" aria-hidden="true"></div>
-        </section>
+        </header>
 
-        <h1 class="page-title">תחבורה</h1>
+        <div data-no-vote-note hidden>
+          <p class="intro">לא נתתם קול לתחום הזה. תנו לו קול כדי לחלק את ההשפעה בין תתי־הנושאים.</p>
+        </div>
 
         <ul class="subtopics">
-          <li style="--color: var(--pink)">
+          <li>
             <h2>תחבורה ציבורית</h2>
             <p>אוטובוסים, רכבות, רכבות קלות ומטרו</p>
           </li>
-          <li style="--color: var(--teal)">
+          <li>
             <h2>כבישים ותשתיות דרך</h2>
             <p>סלילה, שדרוג ותחזוקת כבישים</p>
           </li>
-          <li style="--color: var(--yellow)">
+          <li>
             <h2>בטיחות בדרכים</h2>
             <p>מניעה, הסברה ושיפור הבטיחות בתשתיות</p>
           </li>
-          <li style="--color: var(--brown)">
+          <li>
             <h2>תעופה וספנות</h2>
             <p>הפעילות הממשלתית בתחומי התעופה והשיט ותמיכות רלוונטיות</p>
           </li>
@@ -46,5 +52,7 @@
       <div class="home-indicator" aria-hidden="true"></div>
     </div>
   </div>
+  <script src="drafts/ballot.js"></script>
+  <script src="assets/js/topic-header.js"></script>
 </body>
 </html>

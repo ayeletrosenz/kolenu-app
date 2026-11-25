@@ -285,9 +285,10 @@
 }
 .w-card.is-front .w-content { visibility: visible; }
 
-@media (max-width: 480px), (max-height: 480px) and (pointer: coarse), (display-mode: standalone), (display-mode: fullscreen) {
-  .v--wheel .v-head { flex-shrink: 0; }
-  .v--wheel .v-body { flex: 1 1 0; min-height: 220px; }
+@media (max-width: 480px), (max-width: 1024px) and (hover: none) and (pointer: coarse), (display-mode: standalone), (display-mode: fullscreen) {
+  .v--wheel .v-head { flex-shrink: 0; padding-bottom: var(--s1); }
+  .v--wheel .v-title { font-size: clamp(30px, 5dvh, 34px); line-height: 1.15; }
+  .v--wheel .v-body { flex: 1 1 0; min-height: 206px; }
 
   .v--wheel .w-stage {
     min-height: 0;
@@ -296,7 +297,7 @@
 
   .v--wheel .w-card {
     top: calc(50% - 6px);
-    height: clamp(190px, 68%, 232px);
+    height: clamp(184px, 68%, 232px);
     margin-top: 0;
     translate: 0 -50%;
   }
@@ -306,10 +307,11 @@
   .v--wheel .stepper--l button { width: 52px; height: 52px; }
 
   .v--wheel .dock--dock {
-    padding-block: clamp(12px, 2.5dvh, 24px) clamp(12px, 3dvh, 28px);
+    padding-block: clamp(10px, 2dvh, 24px);
   }
 
-  .v--wheel .dock--dock .wallet { padding-bottom: clamp(12px, 2.5dvh, 32px); }
+  .v--wheel .dock--dock .wallet { padding-bottom: clamp(10px, 2dvh, 28px); }
+  .v--wheel .dock-actions > * { height: 48px; }
   .v--wheel .wallet-grid,
   .v--wheel .w-row { gap: clamp(3px, 1.1vw, 6px); }
   .v--wheel .w-row svg {

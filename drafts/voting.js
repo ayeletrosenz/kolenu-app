@@ -18,9 +18,11 @@ const stepperHTML = (i, size = 'm') =>
   `<button type="button" data-remove="${i}" aria-label="הסרת קול" ${votes[i] === 0 ? 'disabled' : ''}>` +
   `<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10H17"/></svg></button></span>`;
 
-/* Always the influence split; without votes it opens locked at 0%. */
-const topicHref = (i) =>
-  new URL(`topic-${TOPICS[i].slug}-edit.html`, appRoot).href;
+/* Topics with no votes open the read-only explanation from the ballot. */
+const topicHref = (i) => {
+  const page = votes[i] > 0 ? '-edit.html' : '.html?from=vote';
+  return new URL(`topic-${TOPICS[i].slug}${page}`, appRoot).href;
+};
 
 const subHTML = (i) =>
   `<a class="sub" href="${topicHref(i)}">תתי־נושאים</a>`;

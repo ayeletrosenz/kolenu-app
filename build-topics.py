@@ -92,12 +92,37 @@ TOPICS = [
     ]),
 ]
 
+BALLOT_SYMBOL = """  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="ballot" viewBox="0 0 24 24"><path fill="currentColor" d="M11 0H24V24H0V11H11Z M9 0V9H0Z"/></symbol>
+  </svg>"""
+
+TRANSITION_CSS = '  <link rel="stylesheet" href="assets/css/topic-transition.css" media="(prefers-reduced-motion: no-preference)">'
+BALLOT_BACK = 'onclick="if (history.length > 1) { history.back(); return false; }"'
+HEADER_SCRIPTS = """  <script src="drafts/ballot.js"></script>
+  <script src="assets/js/topic-header.js"></script>"""
+
+
+def ballot_header(slug, name, reading=False):
+    attributes = " data-vote-reading" if reading else ""
+    back_href = f"explanation-5.html#topic-{slug}" if reading else "drafts/4-wheel.html"
+    back_label = "חזרה" if reading else "חזרה להצבעה"
+    return f"""        <header class="top influence-header" data-topic="{slug}"{attributes}>
+          <a class="back" href="{back_href}" {BALLOT_BACK}>
+            <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true"><path d="M2 1.5L8.5 8L2 14.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/></svg>
+            <span>{back_label}</span>
+          </a>
+          <div class="topic-count-row">
+            <h1 class="topic-count-title">{name}</h1>
+          </div>
+        </header>"""
+
+
 def page(slug, name, subs):
     items = "\n".join(
-        f"""          <li style="--color: var(--{color})">
+        f"""          <li>
             <h2>{title}</h2>
             <p>{desc}</p>
-          </li>""" for color, title, desc in subs)
+          </li>""" for _, title, desc in subs)
     return f"""<!doctype html>
 <html lang="he" dir="rtl">
 <head>
@@ -105,24 +130,20 @@ def page(slug, name, subs):
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{name} · קולנו</title>
   <link rel="stylesheet" href="styles.css">
+{TRANSITION_CSS}
 </head>
 <body>
+{BALLOT_SYMBOL}
   <div class="device">
     <span class="btn btn-power" aria-hidden="true"></span>
     <span class="btn btn-volume" aria-hidden="true"></span>
-    <div class="device-bezel" style="--screen-edge: var(--sky)">
+    <div class="device-bezel device-bezel--influence">
       <main class="screen">
-        <section class="hero hero--topic" style="--hero: var(--sky)">
-          <div class="top-row">
-            <a class="back" href="explanation-5.html#topic-{slug}" onclick="if (history.length > 1) {{ history.back(); return false; }}">
-              <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true"><path d="M2 1.5L8.5 8L2 14.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/></svg>
-              <span>חזרה</span>
-            </a>
-          </div>
-          <div class="hero-art" aria-hidden="true"></div>
-        </section>
+{ballot_header(slug, name, reading=True)}
 
-        <h1 class="page-title">{name}</h1>
+        <div data-no-vote-note hidden>
+          <p class="intro">לא נתתם קול לתחום הזה. תנו לו קול כדי לחלק את ההשפעה בין תתי־הנושאים.</p>
+        </div>
 
         <ul class="subtopics">
 {items}
@@ -131,6 +152,7 @@ def page(slug, name, subs):
       <div class="home-indicator" aria-hidden="true"></div>
     </div>
   </div>
+{HEADER_SCRIPTS}
 </body>
 </html>
 """
@@ -141,18 +163,25 @@ def pct_label(v):
     return f"{int(r)}%" if r == int(r) else f"{r:.1f}%"
 
 
+def subtopic_label(title):
+    start, space, last_word = title.rpartition(" ")
+    return (
+        f'<span>{start}{space}<span class="bar-name-end">{last_word}'
+        '<span class="chev" aria-hidden="true"></span></span></span>'
+    )
+
+
 def edit_page(slug, name, subs):
     share = 100 / len(subs)
     bars = "\n".join(
         f"""          <li class="bar" style="--pct: {share:.4f}">
             <div class="bar-row">
               <div class="bar-fill"></div>
-              <button class="bar-name" type="button" aria-expanded="false" aria-controls="desc-{k}"><span>{title}</span><span class="chev" aria-hidden="true"></span></button>
+              <button class="bar-name" type="button" aria-expanded="false" aria-controls="desc-{k}">{subtopic_label(title)}</button>
               <button class="bar-pct" type="button">{pct_label(share)}</button>
             </div>
             <p class="bar-desc" id="desc-{k}" hidden>{desc}</p>
           </li>""" for k, (_, title, desc) in enumerate(subs, 1))
-    back = 'onclick="if (history.length > 1) { history.back(); return false; }"'
     return f"""<!doctype html>
 <html lang="he" dir="rtl">
 <head>
@@ -160,26 +189,16 @@ def edit_page(slug, name, subs):
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{name} · חלוקת השפעה · קולנו</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="assets/css/topic-transition.css" media="(prefers-reduced-motion: no-preference)">
+{TRANSITION_CSS}
 </head>
 <body>
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="ballot" viewBox="0 0 24 24"><path fill="currentColor" d="M11 0H24V24H0V11H11Z M9 0V9H0Z"/></symbol>
-  </svg>
+{BALLOT_SYMBOL}
   <div class="device">
     <span class="btn btn-power" aria-hidden="true"></span>
     <span class="btn btn-volume" aria-hidden="true"></span>
     <div class="device-bezel device-bezel--influence">
       <main class="screen">
-        <header class="top influence-header" data-topic="{slug}">
-          <a class="back" href="drafts/4-wheel.html" {back}>
-            <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true"><path d="M2 1.5L8.5 8L2 14.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/></svg>
-            <span>חזרה להצבעה</span>
-          </a>
-          <div class="topic-count-row">
-            <h1 class="topic-count-title">{name}</h1>
-          </div>
-        </header>
+{ballot_header(slug, name)}
 
         <section class="intro">
           <p>גררו את הברים כדי לחלק את ההשפעה בין תתי־הנושאים. הסכום תמיד נשאר 100%.</p>
@@ -196,7 +215,7 @@ def edit_page(slug, name, subs):
         </ul>
 
         <footer class="footer">
-          <a class="primary" href="drafts/4-wheel.html" {back}>סיימתי</a>
+          <a class="primary" href="drafts/4-wheel.html" {BALLOT_BACK}>סיימתי</a>
         </footer>
       </main>
       <div class="sheet-scrim" hidden>
@@ -212,7 +231,7 @@ def edit_page(slug, name, subs):
       <div class="home-indicator" aria-hidden="true"></div>
     </div>
   </div>
-  <script src="drafts/ballot.js"></script>
+{HEADER_SCRIPTS}
   <script src="assets/js/influence.js"></script>
 </body>
 </html>

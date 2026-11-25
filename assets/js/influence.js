@@ -1,18 +1,4 @@
-const header = document.querySelector('.influence-header');
-const topicIndex = TOPICS.findIndex(({ slug }) => slug === header.dataset.topic);
-const topicColor = TOPICS[topicIndex].c;
-header.style.setProperty('--topic-accent', topicColor);
-header.querySelector('.topic-count-row').insertAdjacentHTML('beforeend', countHTML(topicIndex, 'xl'));
-
 const rows = [...document.querySelectorAll('.bars .bar')];
-const barColors = TOPICS.map(({ c }) => c)
-  .filter((color) => ![topicColor, 'var(--blue)', 'var(--brown)'].includes(color));
-rows.forEach((row) => {
-  const pick = Math.floor(Math.random() * barColors.length);
-  const [color] = barColors.splice(pick, 1);
-  row.style.setProperty('--color', color);
-});
-
 const n = rows.length;
 const equal = () => rows.map(() => 100 / n);
 /* Each topic keeps its split for the session, so returning to it shows what was set before. */

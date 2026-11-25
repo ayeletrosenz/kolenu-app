@@ -95,6 +95,36 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   isolation: isolate;
 }
 
+/* Status bar and camera in the desktop phone preview. */
+.device-bezel::before {
+  content: "10:24" / "";
+  display: flex;
+  flex: 0 0 46px;
+  align-items: center;
+  padding-inline: 30px;
+  direction: ltr;
+  font: 500 15px/1 system-ui, sans-serif;
+  background-color: var(--topic-accent, var(--screen-edge, var(--paper)));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 16' fill='%23292929'%3E%3Cpath d='M1 5a12 12 0 0 1 18 0l-9 10zM22 14h12V2z'/%3E%3Crect x='39' y='3' width='7' height='12' rx='1'/%3E%3Cpath d='M41 1h3v2h-3z'/%3E%3C/svg%3E");
+  background-position: right 26px center;
+  background-size: 48px 16px;
+  background-repeat: no-repeat;
+}
+
+.device-bezel::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  z-index: 3;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #0b0b0b;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
 .btn {
   position: absolute;
   right: -3px;
@@ -139,10 +169,17 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 @media (max-height: 691px) { .device { zoom: 0.6; } }
 
 /* Real phone: drop the chrome, go full bleed */
-@media (max-width: 480px), (max-height: 480px) and (pointer: coarse), (display-mode: standalone), (display-mode: fullscreen) {
+@media (max-width: 480px), (max-width: 1024px) and (hover: none) and (pointer: coarse), (display-mode: standalone), (display-mode: fullscreen) {
   .device { zoom: 1; }
 
-  body {
+  html:has(body > .device),
+  body:has(> .device) {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  body:has(> .device) {
     background: var(--paper);
     display: block;
     padding: 0;
@@ -150,6 +187,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
   .device {
     width: 100%;
+    height: 100%;
     padding: 0;
     border-radius: 0;
     background: none;
@@ -157,7 +195,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   }
 
   .device-bezel {
-    height: 100dvh;
+    height: 100%;
     padding: env(safe-area-inset-top) env(safe-area-inset-right)
       env(safe-area-inset-bottom) env(safe-area-inset-left);
     background: var(--screen-edge, var(--paper));
@@ -171,6 +209,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   }
 
   .btn,
+  .device-bezel::before,
+  .device-bezel::after,
   .home-indicator { display: none; }
 }
 
@@ -633,12 +673,20 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .bars--locked .bar-pct { color: inherit; cursor: default; }
 .reset:disabled { opacity: 0.3; cursor: default; }
 
-.bars--live .bar-name { text-align: start; cursor: pointer; }
+.bars--live .bar-name {
+  display: block;
+  text-align: start;
+  cursor: pointer;
+}
+
+.bar-name-end { white-space: nowrap; }
 
 .chev {
-  flex-shrink: 0;
+  display: inline-block;
   width: 12px;
   height: 8px;
+  margin-inline-start: 6px;
+  vertical-align: middle;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23292929' stroke-width='2.2' stroke-linecap='square'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
@@ -1035,11 +1083,28 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 
 /* Compact the app's decorative space and controls on phone-sized viewports. */
-@media (max-width: 480px), (max-height: 480px) and (pointer: coarse), (display-mode: standalone), (display-mode: fullscreen) {
-  .screen { scroll-padding-block-end: 84px; }
+@media (max-width: 480px), (max-width: 1024px) and (hover: none) and (pointer: coarse), (display-mode: standalone), (display-mode: fullscreen) {
+  .screen {
+    overscroll-behavior-y: contain;
+    scroll-padding-block-end: 84px;
+  }
+
+  /* Fit short flows by shrinking decoration before any text or controls. */
+  .screen--fit {
+    --u: clamp(5px, 1.05dvh, 8px);
+    --para: var(--u);
+    --s1: var(--u);
+    --s2: calc(2 * var(--u));
+    --s3: calc(3 * var(--u));
+    --s4: calc(4 * var(--u));
+    --margin: clamp(16px, 5vw, 24px);
+  }
 
   .footer,
-  .received .footer { padding-block: var(--s2); }
+  .received .footer {
+    flex-shrink: 0;
+    padding-block: var(--s2);
+  }
   .footer .primary,
   .footer .secondary,
   .step-back { height: 52px; }
@@ -1052,20 +1117,36 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .received-art { padding-block: var(--s2); }
   .art-placeholder { min-height: 0; }
 
-  .hero { height: clamp(96px, 24dvh, 288px); }
-  .hero--topic { height: clamp(80px, 19dvh, 224px); }
-  .hero--bar { height: auto; }
+  .screen--fit .hero {
+    flex-shrink: 1;
+    height: clamp(48px, 22dvh, 200px);
+    min-height: 48px;
+  }
+  .screen--fit .hero--topic { height: clamp(48px, 13dvh, 130px); }
+  .screen--fit .page-title {
+    font-size: clamp(28px, 5dvh, 34px);
+    line-height: 1.15;
+  }
+  .screen--fit .top-row { min-height: 44px; }
   .page-title,
   .body-copy { padding-top: var(--s2); }
   .cost-row,
   .subtopics li { padding-block: var(--s1); }
   .subtopics { padding-block: var(--s2) var(--s3); }
 
-  .id-title { margin-top: var(--s2); padding-top: var(--s2); }
-  .fields { gap: var(--s2); }
+  .id-form { flex: 1 0 auto; }
+  .id-title {
+    margin-top: var(--s1);
+    padding-top: var(--s1);
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .id-title + .fields { padding-top: var(--s1); }
+  .id-form .text-link { margin-top: var(--s1); }
+  .fields { gap: var(--s1); }
   .field input { height: 48px; }
   .camera {
-    min-height: clamp(144px, 27dvh, 240px);
+    min-height: clamp(120px, 23dvh, 200px);
     margin-top: var(--s2);
   }
 
