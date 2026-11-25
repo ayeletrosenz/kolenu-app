@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>רווחה · קריאה מול חלוקת השפעה</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      padding: 32px 24px;
+      background: #1a1a1a;
+      color: #FDFCFA;
+      font-family: system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 500;
+      text-align: center;
+    }
+    .pair {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+    }
+    .slot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .slot span {
+      font-size: 14px;
+      opacity: 0.7;
+    }
+    iframe {
+      width: 440px;
+      height: 960px;
+      border: 0;
+      background: transparent;
+    }
+  </style>
+</head>
+<body>
+  <h1>רווחה וביטחון חברתי</h1>
+  <div class="pair">
+    <div class="slot">
+      <span>קריאה</span>
+      <iframe src="topic-welfare.html" title="מצב קריאה"></iframe>
+    </div>
+    <div class="slot">
+      <span>חלוקת השפעה</span>
+      <iframe src="topic-welfare-edit.html" title="מצב חלוקת השפעה"></iframe>
+    </div>
+  </div>
+</body>
+</html>

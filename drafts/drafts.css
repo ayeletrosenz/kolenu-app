@@ -1,0 +1,401 @@
+/* Main-voting drafts. Built on the app's tokens in ../styles.css. */
+
+.v { overflow-y: auto; }
+
+.v-head { padding: 0 var(--margin) var(--s2); }
+
+.help {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1;
+  padding-top: 2px;
+  text-decoration: none;
+}
+
+.v-title {
+  font-size: 34px;
+  line-height: 40px;
+  font-weight: 800;
+}
+
+.v-body { display: flex; flex-direction: column; flex: 1 0 auto; min-height: 0; }
+
+/* ---------- shared topic pieces ---------- */
+.t-name { font-size: 18px; line-height: 22px; font-weight: 700; }
+.t-name--big { font-size: 26px; line-height: 30px; font-weight: 800; }
+
+.count {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+}
+.count b { font-weight: 800; }
+.count--m b { font-size: 18px; line-height: 20px; }
+.count--o b { font-size: 24px; line-height: 26px; }
+.count--l b { font-size: 34px; line-height: 36px; }
+.count--xl b { font-size: 64px; line-height: 60px; }
+
+.price {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+/* NewFont Hebrew sits ~1.5px above the line-box centre (same as .back svg). */
+.price svg { flex-shrink: 0; transform: translateY(-2.5px); }
+
+.num { display: inline-flex; align-items: center; gap: 4px; font-variant-numeric: tabular-nums; }
+.num b { font-weight: 800; }
+.price--short { font-weight: 700; }
+
+.t-head { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+
+.sub {
+  color: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* −/+ are a matched pair: clear, heavy outline in the topic's readable ink. */
+.stepper { display: inline-flex; gap: var(--s1); }
+.stepper button {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 3px solid var(--on, var(--ink));
+  color: var(--on, var(--ink));
+}
+.stepper button svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: square; }
+.stepper button:disabled { opacity: 0.3; cursor: default; }
+.stepper--s button { width: 44px; height: 44px; }
+.stepper--s button svg { width: 18px; height: 18px; }
+.stepper--l button { width: 64px; height: 64px; }
+.stepper--l button svg { width: 24px; height: 24px; }
+/* One box split in two; the buttons share the middle line. */
+.stepper--joined { gap: 0; }
+.stepper--joined button { width: 52px; height: 44px; }
+.stepper--joined button + button { margin-inline-start: -3px; }
+.stepper--joined button svg { width: 18px; height: 18px; }
+.stepper--joined button:disabled { opacity: 1; }
+.stepper--joined button:disabled svg { opacity: 0.3; }
+
+/* ---------- wallet dock ---------- */
+.dock { flex-shrink: 0; }
+
+.wallet { color: var(--paper); background: var(--ink); }
+
+.wallet-label { font-weight: 700; padding-bottom: var(--s1); }
+
+.wallet-grid { display: flex; flex-direction: column; gap: 6px; }
+
+/* Rows of 12 sit centred under rows of 13, like a packed tray. */
+.w-row { display: flex; justify-content: center; gap: 6px; }
+.w-row i { display: flex; color: var(--paper); transition: color 0.2s, opacity 0.2s; }
+.w-row i.spent { opacity: 0.18; }
+.w-row i.next { color: var(--orange); }
+
+.dock-actions { display: flex; gap: var(--s1); }
+.dock-reset,
+.dock-next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  font-size: 20px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.dock-reset { width: 96px; }
+.dock-next { flex: 1; }
+
+/* Set: wallet and actions are one black block, sticky to the bottom. */
+.dock--dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  margin-top: auto;
+  background: var(--ink);
+  padding: var(--s3) var(--margin) calc(28px + env(safe-area-inset-bottom));
+}
+.dock--dock .wallet { padding-bottom: var(--s4); }
+.dock--dock .dock-reset { border: 1.5px solid var(--paper); color: var(--paper); }
+.dock--dock .dock-next { background: var(--paper); color: var(--ink); }
+
+/* Float: a black wallet tray and the actions hover over the list on the page margin, with nothing behind them. */
+.dock--float {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  margin-top: auto;
+  padding: var(--s2) var(--margin) calc(28px + env(safe-area-inset-bottom));
+  pointer-events: none;
+}
+.dock--float > * { pointer-events: auto; }
+.dock--float .wallet { padding: var(--s2) 12px; margin-bottom: var(--s1); }
+.dock--float .dock-reset { border: 1.5px solid var(--ink); background: var(--paper); color: var(--ink); }
+.dock--float .dock-next { background: var(--ink); color: var(--paper); }
+
+/* ---------- 1. fat list: full-bleed colour rows ---------- */
+.l-list { list-style: none; }
+.l-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s2);
+  padding: var(--s2) var(--margin);
+  background: var(--c);
+  color: var(--on);
+}
+.l-main { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s1); }
+.l-main .t-name { font-size: 24px; line-height: 28px; font-weight: 800; }
+.l-side { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; gap: var(--s1); }
+
+/* ---------- 2. fat list as a table ---------- */
+/* Three columns under a header row: topic (colour bar, name, תתי־נושאים) | votes (−/+, count, next vote) | tokens used.
+   Rows and columns are split by light rules. */
+.v--table { --rule: rgba(41, 41, 41, 0.16); }
+.tb-head,
+.tb-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 162px 48px;
+  margin: 0 var(--margin);
+}
+.tb-head {
+  padding-bottom: var(--s1);
+  padding-inline-start: 14px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 700;
+}
+.tb-head span + span { text-align: center; }
+/* Wider than its column: it spills inwards and keeps its end on the page margin. */
+.tb-head span:last-child { display: flex; justify-content: flex-end; white-space: nowrap; }
+
+.tb-list { list-style: none; margin-bottom: var(--s3); }
+.tb-row {
+  position: relative;
+  padding-block: var(--s2);
+  padding-inline-start: 14px;
+  border-bottom: 1px solid var(--rule);
+}
+.tb-row::before {
+  content: "";
+  position: absolute;
+  inset-block: var(--s2);
+  inset-inline-start: 0;
+  width: 6px;
+  background: var(--c);
+}
+.tb-topic { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s1); padding-inline-end: 8px; }
+.tb-name { font-size: 18px; line-height: 22px; font-weight: 800; }
+.tb-vote,
+.tb-cost { padding-inline: 8px 0; border-inline-start: 1px solid var(--rule); }
+.tb-vote { padding-inline: 16px 8px; }
+.tb-vote { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.tb-ctrl { display: flex; align-items: center; gap: 12px; }
+/* Level with the votes count: both sit on the −/+ line (44px), not the middle of the row. */
+.tb-cost { display: flex; align-items: flex-start; justify-content: flex-end; padding-block-start: 10px; padding-inline-end: 0; }
+.tb-row .num { font-size: 20px; line-height: 24px; }
+.tb-row .price { font-size: 13px; white-space: nowrap; }
+
+/* ---------- 3. cards ---------- */
+.c-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s1);
+  padding: 0 var(--margin) var(--s3);
+}
+.c-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+  min-height: 256px;
+  padding: var(--s2) 12px 12px;
+  background: var(--c);
+  color: var(--on);
+}
+.c-card .price { font-size: 13px; }
+/* Under the name: votes, תתי־נושאים, −/+, next vote. */
+.c-foot { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s1); margin-top: auto; }
+.c-foot .count--xl b { font-size: 52px; line-height: 52px; }
+
+/* Front-card content (wheel, overview spotlight): −/+ at the bottom, next vote under it, level with תתי־נושאים. */
+.f-top { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--s2); }
+.f-top .t-name--big { max-width: 62%; }
+.f-foot { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s1); margin-top: auto; }
+.f-meta { display: flex; align-items: center; justify-content: space-between; align-self: stretch; }
+.f-meta .price,
+.f-meta .sub { font-size: 14px; line-height: 20px; font-weight: 500; }
+
+/* ---------- 4. wheel ---------- */
+.w-stage {
+  position: relative;
+  flex: 1;
+  min-height: 420px;
+  margin: 0 var(--margin);
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+  outline: none;
+}
+.w-stage:active { cursor: grabbing; }
+
+.w-card {
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  height: 232px;
+  margin-top: -116px;
+  will-change: transform;
+}
+.w-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--c);
+  color: var(--on);
+}
+
+.w-label {
+  position: absolute;
+  inset-inline: var(--s2);
+  top: 10px;
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 700;
+}
+.w-card.is-below .w-label { top: auto; bottom: 10px; }
+.w-card.is-front .w-label { visibility: hidden; }
+
+.w-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  padding: var(--s2) var(--s2) var(--s2);
+  visibility: hidden;
+}
+.w-card.is-front .w-content { visibility: visible; }
+
+/* ---------- 5. overview + spotlight ---------- */
+.o-spot {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 196px;
+  margin: 0 var(--margin);
+  padding: var(--s2);
+  background: var(--c);
+  color: var(--on);
+}
+
+/* One chart row per topic: name, a bar in its colour as long as its votes (full = 7), votes, tokens used.
+   Names start on the page margin; the spotlight marker hangs in the margin before them. */
+.o-chart { list-style: none; margin: var(--s2) var(--margin) 0; padding: 0; }
+.o-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 136px 1fr auto;
+  align-items: center;
+  gap: var(--s1);
+  width: 100%;
+  height: 22px;
+  padding: 0;
+  text-align: start;
+}
+.o-row::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: -12px;
+  width: 4px;
+}
+.o-nums { display: flex; gap: 10px; font-size: 13px; line-height: 16px; }
+.o-nums .num { min-width: 34px; justify-content: flex-start; }
+.o-name {
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.o-track { display: flex; height: 12px; }
+.o-bar {
+  width: max(6px, calc(var(--share, 0) * 100%));
+  background: var(--c);
+  transition: width 0.2s;
+}
+.o-row.is-zero .o-bar { width: 2px; }
+/* The spotlit topic: marked at the row start, its bar outlined, its name bold. */
+.o-row[aria-current="true"]::before { background: var(--ink); }
+.o-row[aria-current="true"] .o-name { font-weight: 800; }
+.o-row[aria-current="true"] .o-track { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* ---------- ballot summary ---------- */
+.s-total {
+  margin: 0 var(--margin) var(--s3);
+  padding: var(--s2);
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 16px;
+  line-height: 22px;
+}
+.s-spent { font-size: 22px; line-height: 28px; font-weight: 800; }
+
+.s-head,
+.s-row {
+  display: grid;
+  grid-template-columns: 1fr 64px 64px;
+  column-gap: 12px;
+  align-items: center;
+}
+.s-head {
+  padding: 0 var(--margin) var(--s1);
+  padding-inline-start: calc(var(--margin) + var(--s2));
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 700;
+}
+.s-head span:nth-child(n+2) { white-space: nowrap; }
+
+.s-list { list-style: none; margin: 0 var(--margin) var(--s3); }
+.s-row {
+  position: relative;
+  padding-block: 12px;
+  padding-inline-start: var(--s2);
+  border-top: 1px solid var(--ink);
+}
+.s-row:last-child { border-bottom: 1px solid var(--ink); }
+.s-row::before {
+  content: "";
+  position: absolute;
+  inset-block: 12px;
+  inset-inline-start: 0;
+  width: 6px;
+  background: var(--c);
+}
+.s-name { font-size: 16px; line-height: 22px; font-weight: 700; }
+/* Icons stack in one column; each number sits right after its icon. */
+.s-row .num { justify-content: flex-start; font-size: 18px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .w-row i, .o-bar { transition: none; }
+}

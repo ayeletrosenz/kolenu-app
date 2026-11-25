@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>אימות זהות נוסף · קולנו</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="device" aria-label="Pixel 11 Pro">
+    <span class="btn btn-power" aria-hidden="true"></span>
+    <span class="btn btn-volume" aria-hidden="true"></span>
+    <div class="device-bezel">
+      <div class="punch-hole" aria-hidden="true"></div>
+      <div class="status-bar" aria-hidden="true">
+        <span class="status-time">10:24</span>
+        <span class="status-icons">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21 0 8.5C3.3 5.4 7.5 3.5 12 3.5s8.7 1.9 12 5L12 21Z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2 22h20V2L2 22Z"/></svg>
+          <svg width="10" height="16" viewBox="0 0 10 18" fill="none"><rect x="3.5" y="0" width="3" height="2" fill="currentColor"/><rect x="0.75" y="1.75" width="8.5" height="15.5" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="2.5" y="6" width="5" height="9.5" fill="currentColor"/></svg>
+        </span>
+      </div>
+      <main class="screen selfie" data-state="idle">
+        <header class="top">
+          <a class="back" href="privacy.html">
+            <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true"><path d="M2 1.5L8.5 8L2 14.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/></svg>
+            <span>חזרה</span>
+          </a>
+        </header>
+
+        <h1 class="selfie-title">אימות זהות נוסף</h1>
+        <p class="selfie-intro">כדי להשלים את ההזדהות, נצלם סרטון קצר של הפנים שלכם לצורך אימות הזהות.</p>
+
+        <div class="camera">
+          <video class="camera-feed" autoplay playsinline muted></video>
+          <div class="camera-guide" aria-hidden="true">
+            <p class="camera-cue"></p>
+            <div class="camera-oval-area">
+              <div class="camera-oval">
+                <svg class="camera-ring" viewBox="0 0 300 400" aria-hidden="true">
+                  <ellipse class="ring-base" cx="150" cy="200" rx="148" ry="198" />
+                  <path class="ring-progress" pathLength="100" d="M150 2A148 198 0 1 1 150 398A148 198 0 1 1 150 2" />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="camera-status" role="status" aria-live="polite">
+            <svg class="camera-check" width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true"><path d="M10 29L23 42L46 15" stroke="currentColor" stroke-width="6" stroke-linecap="square"/></svg>
+            <p class="camera-status-text"></p>
+          </div>
+        </div>
+
+        <p class="selfie-privacy">הסרטון ישמש לאימות בלבד ויימחק בסיומו.</p>
+
+        <footer class="footer">
+          <button class="primary selfie-action" type="button">התחלת צילום</button>
+        </footer>
+      </main>
+      <div class="home-indicator" aria-hidden="true"></div>
+    </div>
+  </div>
+  <script src="assets/js/selfie.js"></script>
+</body>
+</html>

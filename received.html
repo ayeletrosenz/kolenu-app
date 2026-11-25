@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>תודה שהצבעתם! · קולנו</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="device" aria-label="Pixel 11 Pro">
+    <span class="btn btn-power" aria-hidden="true"></span>
+    <span class="btn btn-volume" aria-hidden="true"></span>
+    <div class="device-bezel" style="--status-bg: var(--sky)">
+      <div class="punch-hole" aria-hidden="true"></div>
+      <div class="status-bar" aria-hidden="true">
+        <span class="status-time">10:24</span>
+        <span class="status-icons">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21 0 8.5C3.3 5.4 7.5 3.5 12 3.5s8.7 1.9 12 5L12 21Z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2 22h20V2L2 22Z"/></svg>
+          <svg width="10" height="16" viewBox="0 0 10 18" fill="none"><rect x="3.5" y="0" width="3" height="2" fill="currentColor"/><rect x="0.75" y="1.75" width="8.5" height="15.5" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="2.5" y="6" width="5" height="9.5" fill="currentColor"/></svg>
+        </span>
+      </div>
+      <main class="screen received">
+        <h1 class="received-title">תודה שהצבעתם!</h1>
+
+        <!-- Illustration slot: swap the placeholder for <img src="assets/illustrations/…" alt="…"> once supplied. -->
+        <div class="landing-art received-art">
+          <div class="art-placeholder" aria-hidden="true"></div>
+        </div>
+
+        <p class="received-note">אפשר לשנות את ההצבעה עד סגירת הקלפיות.<br>רק ההצבעה האחרונה שתשלחו תיספר.</p>
+
+        <footer class="footer landing-actions">
+          <a class="secondary received-change" href="drafts/index.html">שינוי ההצבעה</a>
+          <a class="primary" href="landing.html">סיום</a>
+        </footer>
+      </main>
+      <div class="home-indicator" aria-hidden="true"></div>
+    </div>
+  </div>
+  <script>
+    /* Changing the vote reopens the voting screen the summary came from, with the submitted choices still in the session. */
+    const from = sessionStorage.getItem('kolenu.summaryFrom');
+    if (from) document.querySelector('.received-change').href = from;
+  </script>
+</body>
+</html>

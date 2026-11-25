@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ההצבעה שלכם חשאית · קולנו</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="device" aria-label="Pixel 11 Pro">
+    <span class="btn btn-power" aria-hidden="true"></span>
+    <span class="btn btn-volume" aria-hidden="true"></span>
+    <div class="device-bezel" style="--status-bg: var(--sky)">
+      <div class="punch-hole" aria-hidden="true"></div>
+      <div class="status-bar" aria-hidden="true">
+        <span class="status-time">10:24</span>
+        <span class="status-icons">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21 0 8.5C3.3 5.4 7.5 3.5 12 3.5s8.7 1.9 12 5L12 21Z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2 22h20V2L2 22Z"/></svg>
+          <svg width="10" height="16" viewBox="0 0 10 18" fill="none"><rect x="3.5" y="0" width="3" height="2" fill="currentColor"/><rect x="0.75" y="1.75" width="8.5" height="15.5" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="2.5" y="6" width="5" height="9.5" fill="currentColor"/></svg>
+        </span>
+      </div>
+      <main class="screen">
+        <section class="hero hero--topic" style="--hero: var(--sky)">
+          <div class="top-row">
+            <a class="back privacy-back" href="landing.html">
+              <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true"><path d="M2 1.5L8.5 8L2 14.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/></svg>
+              <span>חזרה</span>
+            </a>
+          </div>
+          <div class="hero-art" aria-hidden="true"></div>
+        </section>
+
+        <h1 class="page-title">ההצבעה שלכם חשאית</h1>
+
+        <section class="body-copy body-copy--tight">
+          <p>ההזדהות מאמתת את זכאותכם להצביע, וההצבעה שלכם מוצפנת ונספרת לאחר שפרטי הזיהוי הופרדו ממנה.</p>
+        </section>
+
+        <form class="id-form" id="id-form" aria-labelledby="id-title">
+          <h2 class="id-title" id="id-title">התחברו למערכת ההזדהות הלאומית</h2>
+          <div class="fields">
+            <label class="field">
+              <span>מספר תעודת זהות<small>(כולל ספרת ביקורת)</small></span>
+              <input type="text" inputmode="numeric" autocomplete="username" maxlength="9" dir="ltr">
+            </label>
+            <label class="field">
+              <span>סיסמה</span>
+              <input type="password" autocomplete="current-password" dir="ltr">
+            </label>
+          </div>
+
+          <button class="text-link" type="button">שכחתי סיסמה</button>
+
+          <footer class="footer">
+            <button class="primary" type="submit">כניסה</button>
+          </footer>
+        </form>
+      </main>
+      <div class="home-indicator" aria-hidden="true"></div>
+    </div>
+  </div>
+  <script>
+    /* Fixed links, not history: identification and the video otherwise bounce between each other forever. */
+    if (/explanation-5\.html/.test(document.referrer)) document.querySelector('.privacy-back').href = 'explanation-5.html';
+
+    /* Mock: any input is accepted. */
+    document.getElementById('id-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      location.href = 'selfie.html';
+    });
+  </script>
+</body>
+</html>

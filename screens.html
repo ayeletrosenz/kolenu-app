@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>כל מסכי קולנו</title>
+  <style>
+    @font-face {
+      font-family: NewFont;
+      src: url("assets/fonts/NewFont-Regular.otf") format("opentype");
+      font-display: swap;
+    }
+    @font-face {
+      font-family: NewFont;
+      src: url("assets/fonts/NewFont-Bold.otf") format("opentype");
+      font-weight: 700;
+      font-display: swap;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: clamp(16px, 4vw, 56px);
+      background: #fdfcfa;
+      color: #292929;
+      font: 1rem/1.4 NewFont, system-ui, sans-serif;
+    }
+    h1 { margin: 0 0 16px; font-size: clamp(2.5rem, 6vw, 4rem); }
+    nav { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+    a { color: inherit; text-underline-offset: .2em; }
+    a:focus-visible, iframe:focus-visible { outline: 3px solid #2f54c9; outline-offset: 3px; }
+    section { margin-block-start: 36px; border-block-start: 1px solid #c8c4bc; }
+    h2 { margin-block: 16px; font-size: 1.5rem; }
+    .screens {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 250px);
+      gap: 20px 16px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .screen-link {
+      display: block;
+      margin-block-end: 8px;
+      font-weight: 700;
+    }
+    .preview { position: relative; height: 500px; background: #1a1a1a; }
+    iframe {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 500px;
+      height: 1000px;
+      border: 0;
+      transform: scale(.5);
+      transform-origin: top right;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>כל מסכי קולנו</h1>
+    <nav aria-label="קבוצות מסכים">
+      <a href="#voting">מהלך ההצבעה</a>
+      <a href="#guide">איך ההצבעה עובדת?</a>
+      <a href="#topics">קריאה על נושאי ההצבעה</a>
+      <a href="#influence">חלוקת השפעה לפי נושא</a>
+    </nav>
+  </header>
+  <main>
+    <section id="voting" aria-labelledby="voting-title">
+      <h2 id="voting-title">מהלך ההצבעה</h2>
+      <ul class="screens">
+        <li>
+          <a class="screen-link" href="landing.html" target="_blank" rel="noopener">מסך פתיחה</a>
+          <div class="preview">
+            <iframe src="landing.html" title="מהלך ההצבעה – מסך פתיחה"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="privacy.html" target="_blank" rel="noopener">פרטיות</a>
+          <div class="preview">
+            <iframe src="privacy.html" title="מהלך ההצבעה – פרטיות"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="selfie.html" target="_blank" rel="noopener">אימות זהות</a>
+          <div class="preview">
+            <iframe src="selfie.html" title="מהלך ההצבעה – אימות זהות"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="drafts/4-wheel.html" target="_blank" rel="noopener">הצבעה במניפת קלפים</a>
+          <div class="preview">
+            <iframe src="drafts/4-wheel.html" title="מהלך ההצבעה – הצבעה במניפת קלפים"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="drafts/summary.html" target="_blank" rel="noopener">סיכום ההצבעה</a>
+          <div class="preview">
+            <iframe src="drafts/summary.html" title="מהלך ההצבעה – סיכום ההצבעה"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="received.html" target="_blank" rel="noopener">אישור קבלה</a>
+          <div class="preview">
+            <iframe src="received.html" title="מהלך ההצבעה – אישור קבלה"></iframe>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <section id="guide" aria-labelledby="guide-title">
+      <h2 id="guide-title">איך ההצבעה עובדת?</h2>
+      <ul class="screens">
+        <li>
+          <a class="screen-link" href="explanation-1.html" target="_blank" rel="noopener">מה קובעים בהצבעה?</a>
+          <div class="preview">
+            <iframe src="explanation-1.html" title="איך ההצבעה עובדת? – מה קובעים בהצבעה?" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="explanation-2.html" target="_blank" rel="noopener">אסימונים וקולות</a>
+          <div class="preview">
+            <iframe src="explanation-2.html" title="איך ההצבעה עובדת? – אסימונים וקולות" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="explanation-3.html" target="_blank" rel="noopener">כמה עולים הקולות?</a>
+          <div class="preview">
+            <iframe src="explanation-3.html" title="איך ההצבעה עובדת? – כמה עולים הקולות?" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="explanation-4.html" target="_blank" rel="noopener">חלוקת ההשפעה</a>
+          <div class="preview">
+            <iframe src="explanation-4.html" title="איך ההצבעה עובדת? – חלוקת ההשפעה" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="explanation-5.html" target="_blank" rel="noopener">על מה מצביעים?</a>
+          <div class="preview">
+            <iframe src="explanation-5.html" title="איך ההצבעה עובדת? – על מה מצביעים?" loading="lazy"></iframe>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <section id="topics" aria-labelledby="topics-title">
+      <h2 id="topics-title">קריאה על נושאי ההצבעה</h2>
+      <ul class="screens">
+        <li>
+          <a class="screen-link" href="topic-defense.html" target="_blank" rel="noopener">ביטחון</a>
+          <div class="preview">
+            <iframe src="topic-defense.html" title="קריאה על נושאי ההצבעה – ביטחון" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-homeland.html" target="_blank" rel="noopener">ביטחון פנים וחירום</a>
+          <div class="preview">
+            <iframe src="topic-homeland.html" title="קריאה על נושאי ההצבעה – ביטחון פנים וחירום" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-health.html" target="_blank" rel="noopener">בריאות</a>
+          <div class="preview">
+            <iframe src="topic-health.html" title="קריאה על נושאי ההצבעה – בריאות" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-housing.html" target="_blank" rel="noopener">דיור ופיתוח יישובים</a>
+          <div class="preview">
+            <iframe src="topic-housing.html" title="קריאה על נושאי ההצבעה – דיור ופיתוח יישובים" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-religion.html" target="_blank" rel="noopener">דת ומוסדות תורניים</a>
+          <div class="preview">
+            <iframe src="topic-religion.html" title="קריאה על נושאי ההצבעה – דת ומוסדות תורניים" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-education.html" target="_blank" rel="noopener">חינוך והשכלה גבוהה</a>
+          <div class="preview">
+            <iframe src="topic-education.html" title="קריאה על נושאי ההצבעה – חינוך והשכלה גבוהה" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-economy.html" target="_blank" rel="noopener">כלכלה ותעסוקה</a>
+          <div class="preview">
+            <iframe src="topic-economy.html" title="קריאה על נושאי ההצבעה – כלכלה ותעסוקה" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-culture.html" target="_blank" rel="noopener">מדע, תרבות וספורט</a>
+          <div class="preview">
+            <iframe src="topic-culture.html" title="קריאה על נושאי ההצבעה – מדע, תרבות וספורט" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-government.html" target="_blank" rel="noopener">ממשל ושירותים ציבוריים</a>
+          <div class="preview">
+            <iframe src="topic-government.html" title="קריאה על נושאי ההצבעה – ממשל ושירותים ציבוריים" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-environment.html" target="_blank" rel="noopener">סביבה, אנרגיה ומים</a>
+          <div class="preview">
+            <iframe src="topic-environment.html" title="קריאה על נושאי ההצבעה – סביבה, אנרגיה ומים" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-welfare.html" target="_blank" rel="noopener">רווחה וביטחון חברתי</a>
+          <div class="preview">
+            <iframe src="topic-welfare.html" title="קריאה על נושאי ההצבעה – רווחה וביטחון חברתי" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-transport.html" target="_blank" rel="noopener">תחבורה</a>
+          <div class="preview">
+            <iframe src="topic-transport.html" title="קריאה על נושאי ההצבעה – תחבורה" loading="lazy"></iframe>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <section id="influence" aria-labelledby="influence-title">
+      <h2 id="influence-title">חלוקת השפעה לפי נושא</h2>
+      <ul class="screens">
+        <li>
+          <a class="screen-link" href="topic-defense-edit.html" target="_blank" rel="noopener">ביטחון</a>
+          <div class="preview">
+            <iframe src="topic-defense-edit.html" title="חלוקת השפעה לפי נושא – ביטחון" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-homeland-edit.html" target="_blank" rel="noopener">ביטחון פנים וחירום</a>
+          <div class="preview">
+            <iframe src="topic-homeland-edit.html" title="חלוקת השפעה לפי נושא – ביטחון פנים וחירום" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-health-edit.html" target="_blank" rel="noopener">בריאות</a>
+          <div class="preview">
+            <iframe src="topic-health-edit.html" title="חלוקת השפעה לפי נושא – בריאות" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-housing-edit.html" target="_blank" rel="noopener">דיור ופיתוח יישובים</a>
+          <div class="preview">
+            <iframe src="topic-housing-edit.html" title="חלוקת השפעה לפי נושא – דיור ופיתוח יישובים" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-religion-edit.html" target="_blank" rel="noopener">דת ומוסדות תורניים</a>
+          <div class="preview">
+            <iframe src="topic-religion-edit.html" title="חלוקת השפעה לפי נושא – דת ומוסדות תורניים" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-education-edit.html" target="_blank" rel="noopener">חינוך והשכלה גבוהה</a>
+          <div class="preview">
+            <iframe src="topic-education-edit.html" title="חלוקת השפעה לפי נושא – חינוך והשכלה גבוהה" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-economy-edit.html" target="_blank" rel="noopener">כלכלה ותעסוקה</a>
+          <div class="preview">
+            <iframe src="topic-economy-edit.html" title="חלוקת השפעה לפי נושא – כלכלה ותעסוקה" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-culture-edit.html" target="_blank" rel="noopener">מדע, תרבות וספורט</a>
+          <div class="preview">
+            <iframe src="topic-culture-edit.html" title="חלוקת השפעה לפי נושא – מדע, תרבות וספורט" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-government-edit.html" target="_blank" rel="noopener">ממשל ושירותים ציבוריים</a>
+          <div class="preview">
+            <iframe src="topic-government-edit.html" title="חלוקת השפעה לפי נושא – ממשל ושירותים ציבוריים" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-environment-edit.html" target="_blank" rel="noopener">סביבה, אנרגיה ומים</a>
+          <div class="preview">
+            <iframe src="topic-environment-edit.html" title="חלוקת השפעה לפי נושא – סביבה, אנרגיה ומים" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-welfare-edit.html" target="_blank" rel="noopener">רווחה וביטחון חברתי</a>
+          <div class="preview">
+            <iframe src="topic-welfare-edit.html" title="חלוקת השפעה לפי נושא – רווחה וביטחון חברתי" loading="lazy"></iframe>
+          </div>
+        </li>
+        <li>
+          <a class="screen-link" href="topic-transport-edit.html" target="_blank" rel="noopener">תחבורה</a>
+          <div class="preview">
+            <iframe src="topic-transport-edit.html" title="חלוקת השפעה לפי נושא – תחבורה" loading="lazy"></iframe>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
